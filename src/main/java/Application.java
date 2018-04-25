@@ -10,7 +10,11 @@ public class Application {
     }
 
     public static void main(String[] args) {
-
+        GameSession session = new GameSession(new ArrayList<>(), new ArrayList<>());
+        System.out.println("Witaj w grze Kółko i krzyżyk!");
+        System.out.print("Proszę, podaj swoje imię: ");
+        String imie = gameSessionManager.userInputProvider.get();
+        System.out.println("Graczu " + imie + ". Wygrałeś!");
     }
 
     public GameSessionManager getGameSessionManager() {
