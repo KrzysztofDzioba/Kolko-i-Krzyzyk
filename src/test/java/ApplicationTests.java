@@ -2,6 +2,7 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class ApplicationTests {
@@ -41,13 +42,14 @@ public class ApplicationTests {
     }
 
     @Test
-    public void when_app_starts_I_can_give_name_to_players() {
+    public void can_give_name_to_the_player() {
         //given
-
+        Player player = new Player();
+        String playerName = "Foo";
         //when
-
+        player.setName(playerName);
         //then
-
+        assertEquals(player.getName(), playerName);
     }
 
 
