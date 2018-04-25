@@ -13,8 +13,7 @@ public class ApplicationTests {
 
     @BeforeTest
     private void setUp() {
-        gameSessionManager = new GameSessionManager(new ArrayList<>(),
-                                                    new Scanner(System.in)::nextLine,
+        gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                     System.out::println);
     }
 
@@ -41,11 +40,12 @@ public class ApplicationTests {
     @Test
     public void gameSessionManager_returns_true_if_there_is_end_of_gameSession_because_3_games_were_played() {
         //given
-        gameSessionManager.addGame(new Game());
-        gameSessionManager.addGame(new Game());
-        gameSessionManager.addGame(new Game());
+        GameSession session = new GameSession(new ArrayList<>());
+        session.addGame(new Game());
+        session.addGame(new Game());
+        session.addGame(new Game());
         //when
-        boolean gameSessionEnded = gameSessionManager.isEndOfGameSession();
+        boolean gameSessionEnded = gameSessionManager.isEndOfGameSession(session);
         //then
         assertTrue(gameSessionEnded);
     }
