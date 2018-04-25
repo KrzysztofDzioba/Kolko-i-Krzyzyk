@@ -66,7 +66,6 @@ public class ApplicationTests {
         assertEquals(player.getName(), playerName);
     }
 
-
     @Test
     public void can_add_player_to_game_session() {
         //given
@@ -77,6 +76,15 @@ public class ApplicationTests {
         Assert.assertEquals(session.getPlayers().size(), 1);
     }
 
+    @Test
+    public void it_is_possible_to_set_up_journalists_language() {
+        //given
+        Journalist journalist;
+        //when
+        journalist = new Journalist(Language.ENGLISH);
+        //then
+        assertEquals(journalist.getLanguage(), Language.ENGLISH);
+    }
 
 
 }

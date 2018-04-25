@@ -1,13 +1,12 @@
 package edu.dzioba;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameSession {
     List<Game> games;
     List<Player> players;
 
-    public GameSession(ArrayList<Game> games, ArrayList<Player> players) {
+    public GameSession(List<Game> games, List<Player> players) {
         this.games = games;
         this.players = players;
     }

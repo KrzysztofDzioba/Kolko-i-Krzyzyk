@@ -19,4 +19,17 @@ public class GameSessionManager {
     public boolean isEndOfGameSession(GameSession session) {
         return session.games.size() == 3;
     }
+
+    public void setUpPlayers(GameSession session) {
+        setUpPlayer(session);
+        output.accept("Player added");
+        setUpPlayer(session);
+        output.accept("Player added");
+    }
+
+    private void setUpPlayer(GameSession session) {
+        output.accept("Hello player. Please say me what is your name: ");
+        String playerName = userInputProvider.get();
+        session.addPlayer(new Player(playerName));
+    }
 }
