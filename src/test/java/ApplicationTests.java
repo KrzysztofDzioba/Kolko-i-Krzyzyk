@@ -40,7 +40,7 @@ public class ApplicationTests {
     @Test
     public void gameSessionManager_returns_true_if_there_is_end_of_gameSession_because_3_games_were_played() {
         //given
-        GameSession session = new GameSession(new ArrayList<>());
+        GameSession session = new GameSession(new ArrayList<>(), new ArrayList<>());
         session.addGame(new Game());
         session.addGame(new Game());
         session.addGame(new Game());
@@ -60,6 +60,7 @@ public class ApplicationTests {
         //then
         assertEquals(player.getName(), playerName);
     }
+
 
 
 }
