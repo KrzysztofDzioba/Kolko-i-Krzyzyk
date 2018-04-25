@@ -1,10 +1,16 @@
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class GameSessionManager {
-    List<Game> games;
+    private List<Game> games;
+    private Supplier<String> userInputProvider;
+    private Consumer<String> output;
 
-    public GameSessionManager(List<Game> games) {
+    public GameSessionManager(List<Game> games, Supplier<String> userInputProvider, Consumer<String> output) {
         this.games = games;
+        this.userInputProvider = userInputProvider;
+        this.output = output;
     }
 
     public Player getWinner() { // TODO

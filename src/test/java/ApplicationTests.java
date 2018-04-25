@@ -1,11 +1,22 @@
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class ApplicationTests {
+
+    public GameSessionManager gameSessionManager;
+
+    @BeforeTest
+    private void setUp() {
+        gameSessionManager = new GameSessionManager(new ArrayList<>(),
+                                                    new Scanner(System.in)::nextLine,
+                                                    System.out::println);
+    }
 
     @Test
     public void gameSessionManagerIsPresentInApplicationObject() {
@@ -20,9 +31,8 @@ public class ApplicationTests {
     @Test
     public void gameSessionManager_returns_player_object_on_get_winner_method() {
         //given
-        GameSessionManager gsMgr = new GameSessionManager(new ArrayList<>());
         //when
-        Player winner = gsMgr.getWinner();
+        Player winner = gameSessionManager.getWinner();
         //then
         assertTrue(winner != null);
     }
@@ -31,12 +41,11 @@ public class ApplicationTests {
     @Test
     public void gameSessionManager_returns_true_if_there_is_end_of_gameSession_because_3_games_were_played() {
         //given
-        GameSessionManager gsMgr = new GameSessionManager(new ArrayList<>());
-        gsMgr.addGame(new Game());
-        gsMgr.addGame(new Game());
-        gsMgr.addGame(new Game());
+        gameSessionManager.addGame(new Game());
+        gameSessionManager.addGame(new Game());
+        gameSessionManager.addGame(new Game());
         //when
-        boolean gameSessionEnded = gsMgr.isEndOfGameSession();
+        boolean gameSessionEnded = gameSessionManager.isEndOfGameSession();
         //then
         assertTrue(gameSessionEnded);
     }
