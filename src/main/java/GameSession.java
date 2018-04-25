@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
 
 public class GameSession {
     List<Game> games;
@@ -16,5 +17,9 @@ public class GameSession {
 
     public void addPlayer(Player player) {
         this.players.add(player);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

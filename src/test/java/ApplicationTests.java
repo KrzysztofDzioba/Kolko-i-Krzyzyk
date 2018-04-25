@@ -9,12 +9,14 @@ import static org.testng.Assert.assertTrue;
 
 public class ApplicationTests {
 
-    public GameSessionManager gameSessionManager;
+    private GameSessionManager gameSessionManager;
+    private GameSession session;
 
     @BeforeTest
     private void setUp() {
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                     System.out::println);
+        session = new GameSession(new ArrayList<>(), new ArrayList<>());
     }
 
     @Test
@@ -59,6 +61,17 @@ public class ApplicationTests {
         player.setName(playerName);
         //then
         assertEquals(player.getName(), playerName);
+    }
+
+
+    @Test
+    public void can_add_player_to_game_session() {
+        //given
+        Player player = new Player();
+        //when
+        session.addPlayer(player);
+        //then
+        assertEquals(session.getPlayers().size(), 1);
     }
 
 

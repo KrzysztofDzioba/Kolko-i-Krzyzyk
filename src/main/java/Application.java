@@ -15,6 +15,7 @@ public class Application {
         System.out.print("Proszę, podaj swoje imię: ");
         String imie = gameSessionManager.userInputProvider.get();
         System.out.println("Graczu " + imie + ". Wygrałeś!");
+
     }
 
     public GameSessionManager getGameSessionManager() {
