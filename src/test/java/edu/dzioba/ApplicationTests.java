@@ -1,3 +1,6 @@
+package edu.dzioba;
+
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -71,7 +74,7 @@ public class ApplicationTests {
         //when
         session.addPlayer(player);
         //then
-        assertEquals(session.getPlayers().size(), 1);
+        Assert.assertEquals(session.getPlayers().size(), 1);
     }
 
 

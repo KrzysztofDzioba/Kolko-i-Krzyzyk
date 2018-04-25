@@ -1,3 +1,5 @@
+package edu.dzioba;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

@@ -1,6 +1,7 @@
+package edu.dzioba;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipEntry;
 
 public class GameSession {
     List<Game> games;
