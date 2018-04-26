@@ -7,4 +7,8 @@ public class Board {
     public Board(BoardField[][] fields) {
         this.fields = fields;
     }
+
+    public BoardField[][] getFields() {
+        return fields;
+    }
 }

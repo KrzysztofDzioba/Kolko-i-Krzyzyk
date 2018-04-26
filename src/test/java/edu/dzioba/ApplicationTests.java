@@ -107,17 +107,29 @@ public class ApplicationTests {
         assertTrue(gameSessionManager.getCurrentPlayer() == player);
     }
 
-//    @Test
-//    public void it_is_possible_to_create_board_with_specific_dimensions() {
-//        //given
-//        int exampleInt1 = 3;
-//        int exampleInt2 = 5;
-//        BoardField[][] fields = new BoardField[exampleInt1][exampleInt2];
-//        //when
-//        Board board = new Board(fields);
-//        //then
-//        board.getFields
-//    }
+    @Test
+    public void it_is_possible_to_create_board_with_specific_width() {
+        //given
+        int exampleWidth = 3;
+        int exampleHeight = 5;
+        BoardField[][] fields = new BoardField[exampleWidth][exampleHeight];
+        //when
+        Board board = new Board(fields);
+        //then
+        assertEquals(board.getFields().length, exampleWidth);
+    }
+
+    @Test
+    public void it_is_possible_to_create_board_with_specific_height() {
+        //given
+        int exampleWidth = 3;
+        int exampleHeight = 5;
+        BoardField[][] fields = new BoardField[exampleWidth][exampleHeight];
+        //when
+        Board board = new Board(fields);
+        //then
+        assertEquals(board.getFields()[0].length, exampleHeight);
+    }
 
 
 }
