@@ -1,7 +1,7 @@
 package edu.dzioba;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -14,8 +14,9 @@ public class ApplicationTests {
 
     private GameSessionManager gameSessionManager;
     private GameSession session;
+    private Sign exampleSign = Sign.X;
 
-    @BeforeTest
+    @BeforeMethod
     private void setUp() {
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                     System.out::println);
@@ -48,7 +49,7 @@ public class ApplicationTests {
     @Test
     public void can_give_name_to_the_player() {
         //given
-        Player player = new Player();
+        Player player = new Player("Foo", exampleSign);
         String playerName = "Foo";
         //when
         player.setName(playerName);
@@ -59,11 +60,21 @@ public class ApplicationTests {
     @Test
     public void can_add_player_to_game_session() {
         //given
-        Player player = new Player();
+        Player player = new Player("Foo", exampleSign);
         //when
         session.addPlayer(player);
         //then
         Assert.assertEquals(session.getPlayers().size(), 1);
+    }
+
+    @Test
+    public void players_sign_is_assigned_to_player_after_adding_him_to_GameSession() {
+        //given
+        Player player = new Player("Foo", Sign.X);
+        //when
+        session.addPlayer(player);
+        //then
+        Assert.assertEquals(session.getPlayers().get(0).sign, Sign.X);
     }
 
     @Test

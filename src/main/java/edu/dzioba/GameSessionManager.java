@@ -13,7 +13,7 @@ public class GameSessionManager {
     }
 
     public Player getWinner() { // TODO
-        return new Player();
+        return new Player("Foo", Sign.X);
     }
 
     public boolean isEndOfGameSession(GameSession session) {
@@ -21,15 +21,15 @@ public class GameSessionManager {
     }
 
     public void setUpPlayers(GameSession session) {
-        setUpPlayer(session);
+        setUpPlayer(session, Sign.X);
         output.accept("Player added");
-        setUpPlayer(session);
+        setUpPlayer(session, Sign.O);
         output.accept("Player added");
     }
 
-    private void setUpPlayer(GameSession session) {
-        output.accept("Hello player. Please say me what is your name: ");
+    private void setUpPlayer(GameSession session, Sign sign) {
+        output.accept("Hello player " + sign.name() + ". Please say me what is your name: ");
         String playerName = userInputProvider.get();
-        session.addPlayer(new Player(playerName));
+        session.addPlayer(new Player(playerName, sign));
     }
 }
