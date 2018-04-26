@@ -1,3 +1,5 @@
+package edu.dzioba;
+
 import java.util.function.Consumer;
 
 public class DataProvider {

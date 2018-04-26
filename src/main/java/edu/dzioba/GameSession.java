@@ -1,13 +1,16 @@
-import java.util.ArrayList;
+package edu.dzioba;
+
 import java.util.List;
 
 public class GameSession {
     List<Game> games;
     List<Player> players;
+    private GameSessionManager manager;
 
-    public GameSession(ArrayList<Game> games, ArrayList<Player> players) {
+    public GameSession(List<Game> games, List<Player> players, GameSessionManager manager) {
         this.games = games;
         this.players = players;
+        this.manager = manager;
     }
 
     public void addGame(Game game) {
@@ -16,5 +19,13 @@ public class GameSession {
 
     public void addPlayer(Player player) {
         this.players.add(player);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void start() {
+        manager.setUpPlayers(this);
     }
 }
