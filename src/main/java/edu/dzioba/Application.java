@@ -10,7 +10,7 @@ public class Application {
                                      new Scanner(System.in)::nextLine,
                                      new Journalist(Language.ENGLISH),
                                      new InputConverter());
-        GameSession session = new GameSession(new ArrayList<>(), new ArrayList<>(), manager);
+        GameSession session = new GameSession(new ArrayList<>(), new ArrayList<>(), manager, new RunningState(null, null, null, null, null));
         session.start();
     }
 }

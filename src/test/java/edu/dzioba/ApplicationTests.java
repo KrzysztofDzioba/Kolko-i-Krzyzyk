@@ -24,7 +24,7 @@ public class ApplicationTests {
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                     new Journalist(Language.ENGLISH),
                                                     new InputConverter());
-        session = new GameSession(new ArrayList<>(), new ArrayList<>(), gameSessionManager);
+        session = new GameSession(new ArrayList<>(), new ArrayList<>(), gameSessionManager, new RunningState(null));
         validator = new InputValidator(new InputConverter());
     }
 
@@ -41,7 +41,7 @@ public class ApplicationTests {
     @Test
     public void gameSessionManager_returns_true_if_there_is_end_of_gameSession_because_3_games_were_played() {
         //given
-        GameSession session = new GameSession(new ArrayList<>(), new ArrayList<>(), gameSessionManager);
+        GameSession session = new GameSession(new ArrayList<>(), new ArrayList<>(), gameSessionManager, null);
         session.addGame(new Game());
         session.addGame(new Game());
         session.addGame(new Game());

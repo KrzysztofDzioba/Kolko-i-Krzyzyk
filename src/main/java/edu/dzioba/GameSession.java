@@ -9,11 +9,13 @@ public class GameSession {
     private Integer winningNumber;
     private int[] boardsDimensions;
     private Player currentPlayer;
+    private GameState currentState;
 
-    public GameSession(List<Game> games, List<Player> players, GameSessionManager manager) {
+    public GameSession(List<Game> games, List<Player> players, GameSessionManager manager, GameState state) {
         this.games = games;
         this.players = players;
         this.manager = manager;
+        this.currentState = state;
     }
 
     public void addGame(Game game) {
@@ -29,9 +31,14 @@ public class GameSession {
     }
 
     public void start() {
-        setUp();
-        Game game = new Game();
-        game.play(manager);
+//        setUp();
+        while (GameState.gamesAlreadyPlayed < 3) {
+            doOneCycle();
+        }
+    }
+
+    private void doOneCycle() {
+        this.currentState = currentState.getNextState();
     }
 
     private void setUp() {
