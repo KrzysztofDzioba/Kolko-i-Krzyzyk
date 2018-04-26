@@ -97,5 +97,27 @@ public class ApplicationTests {
         assertTrue(journalist instanceof Journalist);
     }
 
+    @Test
+    public void game_session_knows_current_player() {
+        //given
+        Player player = new Player("foo", exampleSign);
+        //when
+        gameSessionManager.setCurrentPlayer(player);
+        //then
+        assertTrue(gameSessionManager.getCurrentPlayer() == player);
+    }
+
+//    @Test
+//    public void it_is_possible_to_create_board_with_specific_dimensions() {
+//        //given
+//        int exampleInt1 = 3;
+//        int exampleInt2 = 5;
+//        BoardField[][] fields = new BoardField[exampleInt1][exampleInt2];
+//        //when
+//        Board board = new Board(fields);
+//        //then
+//        board.getFields
+//    }
+
 
 }

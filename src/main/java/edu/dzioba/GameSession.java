@@ -26,6 +26,9 @@ public class GameSession {
     }
 
     public void start() {
-        manager.setUpPlayers(this);
+        manager.setUpSession(this);
+        manager.setUpPlayers();
+        manager.setUpFirstPlayer();
     }
+
 }
