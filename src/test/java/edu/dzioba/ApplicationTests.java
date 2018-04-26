@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class ApplicationTests {
@@ -15,12 +16,16 @@ public class ApplicationTests {
     private GameSessionManager gameSessionManager;
     private GameSession session;
     private Sign exampleSign = Sign.X;
+    private InputValidator validator;
+
 
     @BeforeMethod
     private void setUp() {
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
-                                                    new Journalist(Language.ENGLISH));
+                                                    new Journalist(Language.ENGLISH),
+                                                    new InputConverter());
         session = new GameSession(new ArrayList<>(), new ArrayList<>(), gameSessionManager);
+        validator = new InputValidator(new InputConverter());
     }
 
     @Test
@@ -90,7 +95,9 @@ public class ApplicationTests {
     @Test
     public void game_session_manager_has_its_own_journalist() {
         //given
-        GameSessionManager manager = new GameSessionManager(new Scanner(System.in)::nextLine, new Journalist(Language.ENGLISH));
+        GameSessionManager manager = new GameSessionManager(new Scanner(System.in)::nextLine,
+                                                            new Journalist(Language.ENGLISH),
+                                                            new InputConverter());
         //when
         Journalist journalist = manager.getJournalist();
         //then
@@ -129,6 +136,26 @@ public class ApplicationTests {
         Board board = new Board(fields);
         //then
         assertEquals(board.getFields()[0].length, exampleHeight);
+    }
+
+    @Test
+    public void returns_false_if_provided_board_dimensions_are_incorrect() {
+        //given
+        String exampleBoardSize = "a, b";
+        //when
+        boolean correctDimensions = validator.properBoardSizeInput(exampleBoardSize);
+        //then
+        assertFalse(correctDimensions);
+    }
+
+    @Test
+    public void returns_true_if_provided_board_dimensions_are_correct() {
+        //given
+        String exampleBoardSize = "1, 55";
+        //when
+        boolean correctDimensions = validator.properBoardSizeInput(exampleBoardSize);
+        //then
+        assertTrue(correctDimensions);
     }
 
 

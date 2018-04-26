@@ -29,6 +29,7 @@ public class GameSession {
         manager.setUpSession(this);
         manager.setUpPlayers();
         manager.setUpFirstPlayer();
+        manager.setBoardsDimensions(new InputValidator(new InputConverter()));
     }
 
 }
