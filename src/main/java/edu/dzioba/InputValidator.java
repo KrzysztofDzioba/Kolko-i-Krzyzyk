@@ -16,4 +16,13 @@ public class InputValidator {
         }
         return true;
     }
+
+    public boolean properWinningNumber(String userInput) {
+        try {
+            Integer.valueOf(userInput);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
 }

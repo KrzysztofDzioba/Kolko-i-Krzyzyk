@@ -30,6 +30,7 @@ public class GameSession {
         manager.setUpPlayers();
         manager.setUpFirstPlayer();
         manager.setBoardsDimensions(new InputValidator(new InputConverter()));
+        manager.setWinningNumber(new InputValidator(new InputConverter()));
     }
 
 }

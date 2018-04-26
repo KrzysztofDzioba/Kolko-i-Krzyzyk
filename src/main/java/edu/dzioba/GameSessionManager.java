@@ -9,6 +9,7 @@ public class GameSessionManager {
     private GameSession session;
     private InputConverter converter;
     private int[] boardsDimensions;
+    private Integer winningNumber;
 
     public GameSessionManager(Supplier<String> userInputProvider, Journalist journalist, InputConverter converter) {
         this.userInputProvider = userInputProvider;
@@ -78,7 +79,7 @@ public class GameSessionManager {
     }
 
     public void setBoardsDimensions(InputValidator validator) {
-        journalist.sayMessage("Please tell me how the board should look like? Type: X, Y (where X is width and Y is height)");
+        journalist.sayMessage("Please tell me how the board should look like? Type: X,Y (where X is width and Y is height)");
         String userInput = userInputProvider.get();
         boolean wrongUserInput = true;
         while(wrongUserInput) {
@@ -87,7 +88,23 @@ public class GameSessionManager {
                 wrongUserInput = false;
             }
             else {
-                journalist.sayMessage("Please provide proper dimensions (example: 4, 5)");
+                journalist.sayMessage("Please provide proper dimensions (example: 4,5)");
+                userInput = userInputProvider.get();
+            }
+        }
+    }
+
+    public void setWinningNumber(InputValidator validator) {
+        journalist.sayMessage("Please tell me how many signs in a row wins?");
+        String userInput = userInputProvider.get();
+        boolean wrongUserInput = true;
+        while(wrongUserInput) {
+            if(validator.properWinningNumber(userInput)) {
+                winningNumber = Integer.valueOf(userInput);
+                wrongUserInput = false;
+            }
+            else {
+                journalist.sayMessage("Please provide proper number (example: 3)");
                 userInput = userInputProvider.get();
             }
         }
