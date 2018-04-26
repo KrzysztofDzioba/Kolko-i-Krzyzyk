@@ -1,14 +1,10 @@
 package edu.dzioba;
 
-import java.util.function.Consumer;
-
 public class Journalist {
     private final Language language;
-    private Consumer<String> output;
 
-    public Journalist(Language language, Consumer<String> output) {
+    public Journalist(Language language) {
         this.language = language;
-        this.output = output;
     }
 
     public Language getLanguage() {
@@ -16,7 +12,7 @@ public class Journalist {
     }
 
     public String sayMessage(String messsage) {
-        output.accept(messsage);
+        System.out.println(messsage);
         return messsage;
     }
 

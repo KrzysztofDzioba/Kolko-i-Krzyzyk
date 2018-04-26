@@ -19,7 +19,7 @@ public class ApplicationTests {
     @BeforeMethod
     private void setUp() {
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
-                                                    System.out::println);
+                                                    new Journalist(Language.ENGLISH));
         session = new GameSession(new ArrayList<>(), new ArrayList<>(), gameSessionManager);
     }
 
@@ -82,9 +82,19 @@ public class ApplicationTests {
         //given
         Journalist journalist;
         //when
-        journalist = new Journalist(Language.ENGLISH, System.out::println);
+        journalist = new Journalist(Language.ENGLISH);
         //then
         assertEquals(journalist.getLanguage(), Language.ENGLISH);
+    }
+
+    @Test
+    public void game_session_manager_has_its_own_journalist() {
+        //given
+        GameSessionManager manager = new GameSessionManager(new Scanner(System.in)::nextLine, new Journalist(Language.ENGLISH));
+        //when
+        Journalist journalist = manager.getJournalist();
+        //then
+        assertTrue(journalist instanceof Journalist);
     }
 
 

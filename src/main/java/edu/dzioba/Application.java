@@ -8,7 +8,7 @@ public class Application {
     public static void main(String[] args) {
         GameSessionManager manager = new GameSessionManager(
                                      new Scanner(System.in)::nextLine,
-                                     System.out::println);
+                                     new Journalist(Language.ENGLISH));
         GameSession session = new GameSession(new ArrayList<>(), new ArrayList<>(), manager);
         session.start();
     }
