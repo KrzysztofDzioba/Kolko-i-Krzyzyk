@@ -99,12 +99,13 @@ public class GameSessionManager {
         String userInput = userInputProvider.get();
         boolean wrongUserInput = true;
         while(wrongUserInput) {
-            if(validator.properWinningNumber(userInput)) {
+            if(validator.properWinningNumber(userInput, boardsDimensions)) {
                 winningNumber = Integer.valueOf(userInput);
                 wrongUserInput = false;
             }
             else {
-                journalist.sayMessage("Please provide proper number (example: 3)");
+                journalist.sayMessage("Please provide proper number (example: 3). " +
+                        "Number of winning number can't be larger than board dimensions");
                 userInput = userInputProvider.get();
             }
         }

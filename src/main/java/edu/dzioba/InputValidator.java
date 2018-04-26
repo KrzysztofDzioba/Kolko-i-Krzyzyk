@@ -17,12 +17,13 @@ public class InputValidator {
         return true;
     }
 
-    public boolean properWinningNumber(String userInput) {
+    public boolean properWinningNumber(String userInput, int[] boardsDimensions) {
+        Integer value;
         try {
-            Integer.valueOf(userInput);
+            value = Integer.valueOf(userInput);
         } catch (NumberFormatException e) {
             return false;
         }
-        return true;
+        return !(value > Math.max(boardsDimensions[0], boardsDimensions[1]));
     }
 }
