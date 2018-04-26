@@ -6,6 +6,9 @@ public class GameSession {
     List<Game> games;
     List<Player> players;
     private GameSessionManager manager;
+    private Integer winningNumber;
+    private int[] boardsDimensions;
+    private Player currentPlayer;
 
     public GameSession(List<Game> games, List<Player> players, GameSessionManager manager) {
         this.games = games;
@@ -26,11 +29,24 @@ public class GameSession {
     }
 
     public void start() {
-        manager.setUpSession(this);
-        manager.setUpPlayers();
-        manager.setUpFirstPlayer();
-        manager.setBoardsDimensions(new InputValidator(new InputConverter()));
-        manager.setWinningNumber(new InputValidator(new InputConverter()));
+        setUp();
+        Game game = new Game();
+        game.play(manager);
     }
 
+    private void setUp() {
+        manager.setUpSession(this);
+        this.players = manager.setUpPlayers();
+        this.currentPlayer = manager.setUpFirstPlayer();
+        this.boardsDimensions = manager.getBoardsDimensions(new InputValidator(new InputConverter()));
+        this.winningNumber = manager.getWinningNumber(new InputValidator(new InputConverter()), boardsDimensions);
+    }
+
+    public void setCurrentPlayer(Player player) {
+        this.currentPlayer = player;
+    }
+
+    public Player getCurrentPlayer() {
+        return this.currentPlayer;
+    }
 }

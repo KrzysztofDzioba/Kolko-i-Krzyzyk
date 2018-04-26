@@ -1,15 +1,14 @@
 package edu.dzioba;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class GameSessionManager {
     Supplier<String> userInputProvider;
     private Journalist journalist;
-    private Player currentPlayer;
     private GameSession session;
     private InputConverter converter;
-    private int[] boardsDimensions;
-    private Integer winningNumber;
 
     public GameSessionManager(Supplier<String> userInputProvider, Journalist journalist, InputConverter converter) {
         this.userInputProvider = userInputProvider;
@@ -25,17 +24,19 @@ public class GameSessionManager {
         return session.games.size() == 3;
     }
 
-    public void setUpPlayers() {
-        setUpPlayer(session, Sign.X);
+    public List<Player> setUpPlayers() {
+        List<Player> players = new ArrayList<>();
+        players.add(setUpPlayer(Sign.X));
         journalist.sayMessage("Player added");
-        setUpPlayer(session, Sign.O);
+        players.add(setUpPlayer(Sign.O));
         journalist.sayMessage("Player added");
+        return players;
     }
 
-    private void setUpPlayer(GameSession session, Sign sign) {
+    private Player setUpPlayer(Sign sign) {
         journalist.sayMessage("Hello player " + sign.name() + ". Please say me what is your name: ");
         String playerName = userInputProvider.get();
-        session.addPlayer(new Player(playerName, sign));
+        return new Player(playerName, sign);
     }
 
     public Journalist getJournalist() {
@@ -51,10 +52,6 @@ public class GameSessionManager {
         return Sign.valueOf(userInput);
     }
 
-    public void setCurrentPlayer(Player player) {
-        this.currentPlayer = player;
-    }
-
     private Player searchPlayer(Sign sign) {
         Player chosenPlayer = null;
         for (Player player : session.getPlayers()) {
@@ -64,44 +61,38 @@ public class GameSessionManager {
         return chosenPlayer;
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
     public void setUpSession(GameSession gameSession) {
         this.session = gameSession;
     }
 
-    public void setUpFirstPlayer() {
+    public Player setUpFirstPlayer() {
         Sign sign = askWhoShouldBegin();
-        Player player = searchPlayer(sign);
-        setCurrentPlayer(player);
+        return searchPlayer(sign);
     }
 
-    public void setBoardsDimensions(InputValidator validator) {
+    public int[] getBoardsDimensions(InputValidator validator) {
         journalist.sayMessage("Please tell me how the board should look like? Type: X,Y (where X is width and Y is height)");
         String userInput = userInputProvider.get();
         boolean wrongUserInput = true;
         while(wrongUserInput) {
             if(validator.properBoardSizeInput(userInput)) {
-                boardsDimensions = converter.getBoardSize(userInput);
-                wrongUserInput = false;
+                return converter.getBoardSize(userInput);
             }
             else {
                 journalist.sayMessage("Please provide proper dimensions (example: 4,5)");
                 userInput = userInputProvider.get();
             }
         }
+        return null;
     }
 
-    public void setWinningNumber(InputValidator validator) {
+    public Integer getWinningNumber(InputValidator validator, int[] boardsDimensions) {
         journalist.sayMessage("Please tell me how many signs in a row wins?");
         String userInput = userInputProvider.get();
         boolean wrongUserInput = true;
         while(wrongUserInput) {
             if(validator.properWinningNumber(userInput, boardsDimensions)) {
-                winningNumber = Integer.valueOf(userInput);
-                wrongUserInput = false;
+                return Integer.valueOf(userInput);
             }
             else {
                 journalist.sayMessage("Please provide proper number (example: 3). " +
@@ -109,5 +100,6 @@ public class GameSessionManager {
                 userInput = userInputProvider.get();
             }
         }
+        return null;
     }
 }

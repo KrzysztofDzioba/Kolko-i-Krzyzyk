@@ -109,9 +109,9 @@ public class ApplicationTests {
         //given
         Player player = new Player("foo", exampleSign);
         //when
-        gameSessionManager.setCurrentPlayer(player);
+        session.setCurrentPlayer(player);
         //then
-        assertTrue(gameSessionManager.getCurrentPlayer() == player);
+        assertTrue(session.getCurrentPlayer() == player);
     }
 
     @Test
@@ -151,7 +151,7 @@ public class ApplicationTests {
     @Test
     public void returns_true_if_provided_board_dimensions_are_correct() {
         //given
-        String exampleBoardSize = "1, 55";
+        String exampleBoardSize = "1,55";
         //when
         boolean correctDimensions = validator.properBoardSizeInput(exampleBoardSize);
         //then
