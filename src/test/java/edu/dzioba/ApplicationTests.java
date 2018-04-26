@@ -107,5 +107,17 @@ public class ApplicationTests {
         assertTrue(gameSessionManager.getCurrentPlayer() == player);
     }
 
+//    @Test
+//    public void it_is_possible_to_create_board_with_specific_dimensions() {
+//        //given
+//        int exampleInt1 = 3;
+//        int exampleInt2 = 5;
+//        BoardField[][] fields = new BoardField[exampleInt1][exampleInt2];
+//        //when
+//        Board board = new Board(fields);
+//        //then
+//        board.getFields
+//    }
+
 
 }

@@ -41,7 +41,7 @@ public class GameSessionManager {
     public Sign askWhoShouldBegin() {
         String userInput;
         do {
-            journalist.sayMessage("Who should begins? (X or O");
+            journalist.sayMessage("Who should begins? (X or O)");
             userInput = userInputProvider.get();
         } while (!userInput.equals("O") && !userInput.equals("X"));
         return Sign.valueOf(userInput);
