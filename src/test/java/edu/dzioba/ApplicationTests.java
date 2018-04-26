@@ -97,5 +97,15 @@ public class ApplicationTests {
         assertTrue(journalist instanceof Journalist);
     }
 
+    @Test
+    public void game_session_knows_current_player() {
+        //given
+        Player player = new Player("foo", exampleSign);
+        //when
+        gameSessionManager.setCurrentPlayer(player);
+        //then
+        assertTrue(gameSessionManager.getCurrentPlayer() == player);
+    }
+
 
 }
