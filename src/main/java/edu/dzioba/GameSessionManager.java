@@ -7,10 +7,13 @@ public class GameSessionManager {
     private Journalist journalist;
     private Player currentPlayer;
     private GameSession session;
+    private InputConverter converter;
+    private int[] boardsDimensions;
 
-    public GameSessionManager(Supplier<String> userInputProvider, Journalist journalist) {
+    public GameSessionManager(Supplier<String> userInputProvider, Journalist journalist, InputConverter converter) {
         this.userInputProvider = userInputProvider;
         this.journalist = journalist;
+        this.converter = converter;
     }
 
     public Player getWinner() { // TODO
@@ -41,7 +44,7 @@ public class GameSessionManager {
     public Sign askWhoShouldBegin() {
         String userInput;
         do {
-            journalist.sayMessage("Who should begins? (X or O)");
+            journalist.sayMessage("Who should begin? (X or O)");
             userInput = userInputProvider.get();
         } while (!userInput.equals("O") && !userInput.equals("X"));
         return Sign.valueOf(userInput);
@@ -72,5 +75,21 @@ public class GameSessionManager {
         Sign sign = askWhoShouldBegin();
         Player player = searchPlayer(sign);
         setCurrentPlayer(player);
+    }
+
+    public void setBoardsDimensions(InputValidator validator) {
+        journalist.sayMessage("Please tell me how the board should look like? Type: X, Y (where X is width and Y is height)");
+        String userInput = userInputProvider.get();
+        boolean wrongUserInput = true;
+        while(wrongUserInput) {
+            if(validator.properBoardSizeInput(userInput)) {
+                boardsDimensions = converter.getBoardSize(userInput);
+                wrongUserInput = false;
+            }
+            else {
+                journalist.sayMessage("Please provide proper dimensions (example: 4, 5)");
+                userInput = userInputProvider.get();
+            }
+        }
     }
 }
