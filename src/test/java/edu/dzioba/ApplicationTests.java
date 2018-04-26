@@ -19,17 +19,7 @@ public class ApplicationTests {
     private void setUp() {
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                     System.out::println);
-        session = new GameSession(new ArrayList<>(), new ArrayList<>());
-    }
-
-    @Test
-    public void gameSessionManagerIsPresentInApplicationObject() {
-        //given
-        Application ap = new Application();
-        //when
-        GameSessionManager gameSessionManager= ap.getGameSessionManager();
-        //then
-        assertTrue(gameSessionManager instanceof GameSessionManager);
+        session = new GameSession(new ArrayList<>(), new ArrayList<>(), gameSessionManager);
     }
 
     @Test
@@ -45,7 +35,7 @@ public class ApplicationTests {
     @Test
     public void gameSessionManager_returns_true_if_there_is_end_of_gameSession_because_3_games_were_played() {
         //given
-        GameSession session = new GameSession(new ArrayList<>(), new ArrayList<>());
+        GameSession session = new GameSession(new ArrayList<>(), new ArrayList<>(), gameSessionManager);
         session.addGame(new Game());
         session.addGame(new Game());
         session.addGame(new Game());
@@ -81,7 +71,7 @@ public class ApplicationTests {
         //given
         Journalist journalist;
         //when
-        journalist = new Journalist(Language.ENGLISH);
+        journalist = new Journalist(Language.ENGLISH, System.out::println);
         //then
         assertEquals(journalist.getLanguage(), Language.ENGLISH);
     }

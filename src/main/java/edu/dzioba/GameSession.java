@@ -5,10 +5,12 @@ import java.util.List;
 public class GameSession {
     List<Game> games;
     List<Player> players;
+    private GameSessionManager manager;
 
-    public GameSession(List<Game> games, List<Player> players) {
+    public GameSession(List<Game> games, List<Player> players, GameSessionManager manager) {
         this.games = games;
         this.players = players;
+        this.manager = manager;
     }
 
     public void addGame(Game game) {
@@ -21,5 +23,9 @@ public class GameSession {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void start() {
+        manager.setUpPlayers(this);
     }
 }
