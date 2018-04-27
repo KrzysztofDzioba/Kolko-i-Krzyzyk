@@ -180,5 +180,29 @@ public class ApplicationTests {
         assertEquals(players.currentPlayer, player1);
     }
 
+    @Test
+    public void journalist_says_proper_message_if_arguments_are_provided() {
+        //given
+        Journalist journalist = new Journalist(Language.ENGLISH);
+        String parameter = "Foo";
+        String message = "This is my name: %s";
+        //when
+        String output = journalist.sayMessageWithParameters(message, parameter);
+        //then
+        assertEquals(output, "This is my name: Foo");
+    }
+
+    @Test
+    public void journalist_says_proper_message_if_arguments_are_not_provided_to_say_message_with_parameters_method() {
+        //given
+        Journalist journalist = new Journalist(Language.ENGLISH);
+        String parameter = "Foo";
+        String message = "This is my name: %s";
+        //when
+        String output = journalist.sayMessageWithParameters(message, null);
+        //then
+        assertEquals(output, "This is my name: ");
+    }
+
 
 }

@@ -15,7 +15,7 @@ public class RunningState extends GameState {
 
     @Override
     GameState getNextState() {
-        journalist.sayMessage("Player " + players.currentPlayer + ". Please make your move.");
+        journalist.sayMessageWithParameters("Player %s. Please make your move.");
         String userInput = input.get();
         players.currentPlayer = players.getNextPlayer();
         return new WinState(this);
