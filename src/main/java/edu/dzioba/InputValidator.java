@@ -16,4 +16,14 @@ public class InputValidator {
         }
         return true;
     }
+
+    public boolean properWinningNumber(String userInput, int[] boardsDimensions) {
+        Integer value;
+        try {
+            value = Integer.valueOf(userInput);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return !(value > Math.max(boardsDimensions[0], boardsDimensions[1]));
+    }
 }

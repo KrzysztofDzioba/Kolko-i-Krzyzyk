@@ -1,35 +1,23 @@
 package edu.dzioba;
 
-import java.util.List;
-
 public class GameSession {
-    List<Game> games;
-    List<Player> players;
     private GameSessionManager manager;
+    private GameState currentState;
 
-    public GameSession(List<Game> games, List<Player> players, GameSessionManager manager) {
-        this.games = games;
-        this.players = players;
+    public GameSession (GameSessionManager manager, GameState state) {
         this.manager = manager;
-    }
-
-    public void addGame(Game game) {
-        this.games.add(game);
-    }
-
-    public void addPlayer(Player player) {
-        this.players.add(player);
-    }
-
-    public List<Player> getPlayers() {
-        return players;
+        this.currentState = state;
     }
 
     public void start() {
-        manager.setUpSession(this);
-        manager.setUpPlayers();
-        manager.setUpFirstPlayer();
-        manager.setBoardsDimensions(new InputValidator(new InputConverter()));
+//        setUp();
+        while (GameState.gamesAlreadyPlayed < 3) {
+            doOneCycle();
+        }
+    }
+
+    private void doOneCycle() {
+        this.currentState = currentState.getNextState();
     }
 
 }
