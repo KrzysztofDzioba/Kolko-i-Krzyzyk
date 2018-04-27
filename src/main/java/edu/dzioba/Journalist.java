@@ -16,4 +16,14 @@ public class Journalist {
         return messsage;
     }
 
+    public String sayMessageWithParameters(String message, String... strings) {
+        if(strings == null || strings.length == 0) {
+            System.out.println(String.format(message, ""));
+            return String.format(message, "");
+        }
+        String outputMessage = String.format(message, strings);
+        System.out.println(outputMessage);
+        return outputMessage;
+    }
+
 }
