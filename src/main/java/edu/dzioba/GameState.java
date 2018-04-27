@@ -27,6 +27,7 @@ public abstract class GameState {
         this.input = previousState.input;
         this.board = previousState.board;
         this.players = previousState.players;
+        this.manager = previousState.manager;
     }
 
     GameState(GameSessionManager manager) {

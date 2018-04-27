@@ -9,7 +9,9 @@ public class InputConverter {
         return new int[]{width, height};
     }
 
-    public boolean userInputToCoordinates(String userInput) {
-        return false;
+    public Coordinates getCoordinates(String userInput) {
+        String[] cordsStr = userInput.split(" ");
+        return new Coordinates(Integer.valueOf(cordsStr[0]), Integer.valueOf(cordsStr[1]));
     }
+
 }

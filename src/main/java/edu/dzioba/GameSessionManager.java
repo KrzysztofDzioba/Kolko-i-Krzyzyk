@@ -9,11 +9,13 @@ public class GameSessionManager {
     private Journalist journalist;
     private GameSession session;
     InputConverter converter;
+    InputValidator validator;
 
-    public GameSessionManager(Supplier<String> userInputProvider, Journalist journalist, InputConverter converter) {
+    public GameSessionManager(Supplier<String> userInputProvider, Journalist journalist, InputConverter converter, InputValidator validator) {
         this.userInputProvider = userInputProvider;
         this.journalist = journalist;
         this.converter = converter;
+        this.validator = validator;
     }
 
     public Player getWinner() { // TODO
@@ -88,5 +90,22 @@ public class GameSessionManager {
             }
         }
         return null;
+    }
+
+    Coordinates getCoordinates(Player currentPlayer) {
+        journalist.sayMessageWithParameters("Player %s. Please make your move.", currentPlayer.toString());
+        String userInput = userInputProvider.get();
+        Coordinates cords = null;
+        boolean wrongUserInput = true;
+        while(wrongUserInput) {
+            if(validator.properCoordinates(userInput)) {
+                return converter.getCoordinates(userInput);
+            }
+            else {
+                journalist.sayMessage("You provided coordinates in a bad way. Do it like this: 2 3");
+                userInput = userInputProvider.get();
+            }
+        }
+        return cords;
     }
 }

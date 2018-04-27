@@ -30,7 +30,7 @@ public class ApplicationTests {
                                              new Board(sampleBoardDimensions), players);
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                     new Journalist(Language.ENGLISH),
-                                                    new InputConverter());
+                                                    new InputConverter(), new InputValidator(new InputConverter()));
         session = new GameSession(gameSessionManager, new RunningState(basicRunningState));
         validator = new InputValidator(new InputConverter());
     }
@@ -95,7 +95,7 @@ public class ApplicationTests {
         //given
         GameSessionManager manager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                             new Journalist(Language.ENGLISH),
-                                                            new InputConverter());
+                                                            new InputConverter(), new InputValidator(new InputConverter()));
         //when
         Journalist journalist = manager.getJournalist();
         //then
@@ -224,6 +224,18 @@ public class ApplicationTests {
         boolean validCoordinates = validator.properCoordinates(userInput);
         //then
         assertTrue(!validCoordinates);
+    }
+
+    @Test
+    public void input_converter_gives_proper_coordinates() {
+        //given
+        InputConverter converter = new InputConverter();
+        String userInput = "1 2";
+        //when
+        Coordinates cords = converter.getCoordinates(userInput);
+        //then
+        assertEquals(cords.getRow(), 1);
+        assertEquals(cords.getCol(), 2);
     }
 
 

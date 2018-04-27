@@ -29,6 +29,7 @@ public class SetUpState extends GameState {
         int[] dimensions = new int[]{3,3};
         board = new Board(dimensions);
         this.winningNumber = 3;
+        System.out.println("Test set up finished.");
     }
 
 }
