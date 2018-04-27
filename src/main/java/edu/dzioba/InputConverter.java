@@ -8,4 +8,8 @@ public class InputConverter {
         int height = Integer.valueOf(values[1]);
         return new int[]{width, height};
     }
+
+    public boolean userInputToCoordinates(String userInput) {
+        return false;
+    }
 }

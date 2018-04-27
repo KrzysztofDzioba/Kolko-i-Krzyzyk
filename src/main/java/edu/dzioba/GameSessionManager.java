@@ -8,7 +8,7 @@ public class GameSessionManager {
     Supplier<String> userInputProvider;
     private Journalist journalist;
     private GameSession session;
-    private InputConverter converter;
+    InputConverter converter;
 
     public GameSessionManager(Supplier<String> userInputProvider, Journalist journalist, InputConverter converter) {
         this.userInputProvider = userInputProvider;

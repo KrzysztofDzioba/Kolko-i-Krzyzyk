@@ -26,4 +26,15 @@ public class InputValidator {
         }
         return !(value > Math.max(boardsDimensions[0], boardsDimensions[1]));
     }
+
+    public boolean properCoordinates(String userInput) {
+        String[] coordinatesStr = userInput.split(" ");
+        try {
+            Integer.valueOf(coordinatesStr[0]);
+            Integer.valueOf(coordinatesStr[1]);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
 }

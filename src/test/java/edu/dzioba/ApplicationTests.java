@@ -204,5 +204,27 @@ public class ApplicationTests {
         assertEquals(output, "This is my name: ");
     }
 
+    @Test
+    public void input_validator_returns_true_if_provided_user_coordinates_are_correct() {
+        //given
+        InputValidator validator = new InputValidator(new InputConverter());
+        String userInput = "1 1";
+        //when
+        boolean validCoordinates = validator.properCoordinates(userInput);
+        //then
+        assertTrue(validCoordinates);
+    }
+
+    @Test
+    public void input_validator_returns_false_if_provided_user_coordinates_are_correct() {
+        //given
+        InputValidator validator = new InputValidator(new InputConverter());
+        String userInput = "ac2";
+        //when
+        boolean validCoordinates = validator.properCoordinates(userInput);
+        //then
+        assertTrue(!validCoordinates);
+    }
+
 
 }

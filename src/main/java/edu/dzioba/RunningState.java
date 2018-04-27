@@ -17,6 +17,7 @@ public class RunningState extends GameState {
     GameState getNextState() {
         journalist.sayMessageWithParameters("Player %s. Please make your move.");
         String userInput = input.get();
+        manager.converter.userInputToCoordinates(userInput);
         players.currentPlayer = players.getNextPlayer();
         return new WinState(this);
     }
