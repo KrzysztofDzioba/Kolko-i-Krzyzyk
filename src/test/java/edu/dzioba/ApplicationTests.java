@@ -5,11 +5,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 public class ApplicationTests {
 
@@ -17,14 +16,22 @@ public class ApplicationTests {
     private GameSession session;
     private Sign exampleSign = Sign.X;
     private InputValidator validator;
+    private GameState basicRunningState;
+    private Players players;
+    int[] sampleBoardDimensions;
 
 
     @BeforeMethod
     private void setUp() {
+//        Sign[][] fields = new Sign[3][3];
+        players = new Players(Arrays.asList(new Player("foo", Sign.X), new Player("bar", Sign.O)), Sign.X);
+        sampleBoardDimensions = new int[]{3,3};
+        basicRunningState = new RunningState(new Journalist(Language.ENGLISH), new Scanner(System.in)::nextLine,
+                                             new Board(sampleBoardDimensions), players);
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                     new Journalist(Language.ENGLISH),
                                                     new InputConverter());
-        session = new GameSession(new ArrayList<>(), new ArrayList<>(), gameSessionManager, new RunningState(null));
+        session = new GameSession(gameSessionManager, new RunningState(basicRunningState));
         validator = new InputValidator(new InputConverter());
     }
 
@@ -34,19 +41,19 @@ public class ApplicationTests {
         //when
         Player winner = gameSessionManager.getWinner();
         //then
-        assertTrue(winner != null);
+        assertNotNull(winner);
     }
 
 
     @Test
-    public void gameSessionManager_returns_true_if_there_is_end_of_gameSession_because_3_games_were_played() {
+    public void games_returns_true_if_there_is_end_of_gameSession_because_3_games_were_played() {
         //given
-        GameSession session = new GameSession(new ArrayList<>(), new ArrayList<>(), gameSessionManager, null);
-        session.addGame(new Game());
-        session.addGame(new Game());
-        session.addGame(new Game());
+        Games games = new Games(new ArrayList<>());
+        games.add(new Game());
+        games.add(new Game());
+        games.add(new Game());
         //when
-        boolean gameSessionEnded = gameSessionManager.isEndOfGameSession(session);
+        boolean gameSessionEnded = games.threeGamesWerePlayed();
         //then
         assertTrue(gameSessionEnded);
     }
@@ -63,23 +70,14 @@ public class ApplicationTests {
     }
 
     @Test
-    public void can_add_player_to_game_session() {
+    public void can_add_player_to_Players_in_Game() {
         //given
         Player player = new Player("Foo", exampleSign);
+        Players players = new Players(new ArrayList<>(), null);
         //when
-        session.addPlayer(player);
+        boolean playerAdded = players.addPlayer(player);
         //then
-        Assert.assertEquals(session.getPlayers().size(), 1);
-    }
-
-    @Test
-    public void players_sign_is_assigned_to_player_after_adding_him_to_GameSession() {
-        //given
-        Player player = new Player("Foo", Sign.X);
-        //when
-        session.addPlayer(player);
-        //then
-        Assert.assertEquals(session.getPlayers().get(0).sign, Sign.X);
+        assertTrue(playerAdded);
     }
 
     @Test
@@ -105,13 +103,14 @@ public class ApplicationTests {
     }
 
     @Test
-    public void game_session_knows_current_player() {
+    public void players_knows_current_player() {
         //given
-        Player player = new Player("foo", exampleSign);
+        Player player1 = new Player("foo", Sign.X);
+        Player player2 = new Player("bar", Sign.O);
         //when
-        session.setCurrentPlayer(player);
+        Players players = new Players(Arrays.asList(player1, player2), Sign.X);
         //then
-        assertTrue(session.getCurrentPlayer() == player);
+        assertSame(players.currentPlayer, player1);
     }
 
     @Test
@@ -119,9 +118,9 @@ public class ApplicationTests {
         //given
         int exampleWidth = 3;
         int exampleHeight = 5;
-        BoardField[][] fields = new BoardField[exampleWidth][exampleHeight];
+        int[] dimensions = new int[]{exampleWidth, exampleHeight};
         //when
-        Board board = new Board(fields);
+        Board board = new Board(dimensions);
         //then
         assertEquals(board.getFields().length, exampleWidth);
     }
@@ -131,9 +130,8 @@ public class ApplicationTests {
         //given
         int exampleWidth = 3;
         int exampleHeight = 5;
-        BoardField[][] fields = new BoardField[exampleWidth][exampleHeight];
         //when
-        Board board = new Board(fields);
+        Board board = new Board(new int[]{exampleWidth, exampleHeight});
         //then
         assertEquals(board.getFields()[0].length, exampleHeight);
     }
@@ -156,6 +154,30 @@ public class ApplicationTests {
         boolean correctDimensions = validator.properBoardSizeInput(exampleBoardSize);
         //then
         assertTrue(correctDimensions);
+    }
+
+    @Test
+    public void players_returns_next_player() {
+        //given
+        Player player1 = new Player("foo", Sign.X);
+        Player player2 = new Player("bar", Sign.O);
+        Players players = new Players(Arrays.asList(player1, player2), Sign.O);
+        //when
+        Player currentPlayer = players.getNextPlayer();
+        //then
+        assertEquals(currentPlayer, player1);
+    }
+
+    @Test
+    public void it_is_possible_to_set_up_current_player() {
+        //given
+        Player player1 = new Player("foo", Sign.X);
+        Player player2 = new Player("bar", Sign.O);
+        Players players = new Players(Arrays.asList(player1, player2), null);
+        //when
+        players.setCurrentPlayer(Sign.X);
+        //then
+        assertEquals(players.currentPlayer, player1);
     }
 
 

@@ -1,13 +1,12 @@
 package edu.dzioba;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 public class RunningState extends GameState {
 
 
-    RunningState(Journalist output, Supplier<String> input, Language lang, Board board, List<Player> players) {
-        super(output, input, lang, board, players);
+    RunningState(Journalist output, Supplier<String> input, Board board, Players players) {
+        super(output, input, board, players);
     }
 
     RunningState(GameState previousState) {
@@ -16,7 +15,7 @@ public class RunningState extends GameState {
 
     @Override
     GameState getNextState() {
-        System.out.println("dzialam");
+        System.out.println("Running");
         return new WinState(this);
     }
 }

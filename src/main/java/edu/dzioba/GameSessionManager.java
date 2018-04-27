@@ -20,17 +20,13 @@ public class GameSessionManager {
         return new Player("Foo", Sign.X);
     }
 
-    public boolean isEndOfGameSession(GameSession session) {
-        return session.games.size() == 3;
-    }
-
-    public List<Player> setUpPlayers() {
+    public Players setUpPlayers() {
         List<Player> players = new ArrayList<>();
         players.add(setUpPlayer(Sign.X));
         journalist.sayMessage("Player added");
         players.add(setUpPlayer(Sign.O));
         journalist.sayMessage("Player added");
-        return players;
+        return new Players(players, null);
     }
 
     private Player setUpPlayer(Sign sign) {
@@ -52,22 +48,13 @@ public class GameSessionManager {
         return Sign.valueOf(userInput);
     }
 
-    private Player searchPlayer(Sign sign) {
-        Player chosenPlayer = null;
-        for (Player player : session.getPlayers()) {
-            if(player.sign.equals(sign))
-                chosenPlayer = player;
-        }
-        return chosenPlayer;
-    }
-
     public void setUpSession(GameSession gameSession) {
         this.session = gameSession;
     }
 
-    public Player setUpFirstPlayer() {
+    public Player setUpFirstPlayer(Players players) {
         Sign sign = askWhoShouldBegin();
-        return searchPlayer(sign);
+        return players.getPlayer(sign);
     }
 
     public int[] getBoardsDimensions(InputValidator validator) {
