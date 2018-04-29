@@ -15,7 +15,8 @@ public class RunningState extends GameState {
 
     @Override
     GameState getNextState() {
-        manager.getCoordinates(players.currentPlayer);
+        Coordinates cords = manager.getCoordinates(players.currentPlayer);
+        board.insertCoordinates(cords, players.getCurrentsPlayerSign());
         players.currentPlayer = players.getNextPlayer();
         return new WinState(this);
     }

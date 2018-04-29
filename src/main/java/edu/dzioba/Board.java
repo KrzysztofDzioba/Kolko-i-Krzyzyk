@@ -15,10 +15,6 @@ public class Board {
         this.height = dimensions.height;
     }
 
-    public Map<Coordinates, Sign> getFields() {
-        return fields;
-    }
-
     public void insertCoordinates(Coordinates coordinates, Sign sign) {
         fields.put(coordinates, sign);
     }

@@ -36,4 +36,8 @@ public class Players {
         players.add(player);
         return true;
     }
+
+    public Sign getCurrentsPlayerSign() {
+        return currentPlayer.sign;
+    }
 }

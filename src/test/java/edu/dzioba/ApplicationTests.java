@@ -238,7 +238,7 @@ public class ApplicationTests {
     }
 
     @Test
-    public void testName() {
+    public void insert_coordinates_puts_given_sign_into_a_board() {
         //given
         Board board = new Board(sampleBoardDimensions);
         int sampleRow = 2;
@@ -248,7 +248,16 @@ public class ApplicationTests {
         board.insertCoordinates(cords, sampleSign);
         //then
         assertEquals(board.getField(cords), Sign.X);
+    }
 
+    @Test
+    public void players_can_return_currents_player_sign() {
+        //given
+        players.setCurrentPlayer(Sign.X);
+        //when
+        Sign sign = players.getCurrentsPlayerSign();
+        //then
+        assertEquals(sign, Sign.X);
     }
 
 }
