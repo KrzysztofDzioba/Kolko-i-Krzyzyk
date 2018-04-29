@@ -1,6 +1,5 @@
 package edu.dzioba;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -14,7 +13,7 @@ public class ApplicationTests {
 
     private GameSessionManager gameSessionManager;
     private GameSession session;
-    private Sign exampleSign = Sign.X;
+    private Sign sampleSign = Sign.X;
     private InputValidator validator;
     private GameState basicRunningState;
     private Players players;
@@ -61,7 +60,7 @@ public class ApplicationTests {
     @Test
     public void can_give_name_to_the_player() {
         //given
-        Player player = new Player("Foo", exampleSign);
+        Player player = new Player("Foo", sampleSign);
         String playerName = "Foo";
         //when
         player.setName(playerName);
@@ -72,7 +71,7 @@ public class ApplicationTests {
     @Test
     public void can_add_player_to_Players_in_Game() {
         //given
-        Player player = new Player("Foo", exampleSign);
+        Player player = new Player("Foo", sampleSign);
         Players players = new Players(new ArrayList<>(), null);
         //when
         boolean playerAdded = players.addPlayer(player);
@@ -122,7 +121,7 @@ public class ApplicationTests {
         //when
         Board board = new Board(dimensions);
         //then
-        assertEquals(board.getFields().length, exampleWidth);
+        assertEquals(board.width, exampleWidth);
     }
 
     @Test
@@ -133,7 +132,7 @@ public class ApplicationTests {
         //when
         Board board = new Board(new BoardDimensions(exampleWidth, exampleHeight));
         //then
-        assertEquals(board.getFields()[0].length, exampleHeight);
+        assertEquals(board.height, exampleHeight);
     }
 
     @Test
@@ -238,5 +237,18 @@ public class ApplicationTests {
         assertEquals(cords.getCol(), 2);
     }
 
+    @Test
+    public void testName() {
+        //given
+        Board board = new Board(sampleBoardDimensions);
+        int sampleRow = 2;
+        int sampleCol = 2;
+        Coordinates cords = new Coordinates(sampleRow, sampleCol);
+        //when
+        board.insertCoordinates(cords, sampleSign);
+        //then
+        assertEquals(board.getField(cords), Sign.X);
+
+    }
 
 }
