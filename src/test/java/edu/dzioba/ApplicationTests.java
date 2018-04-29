@@ -18,14 +18,14 @@ public class ApplicationTests {
     private InputValidator validator;
     private GameState basicRunningState;
     private Players players;
-    int[] sampleBoardDimensions;
+    BoardDimensions sampleBoardDimensions;
 
 
     @BeforeMethod
     private void setUp() {
 //        Sign[][] fields = new Sign[3][3];
         players = new Players(Arrays.asList(new Player("foo", Sign.X), new Player("bar", Sign.O)), Sign.X);
-        sampleBoardDimensions = new int[]{3,3};
+        sampleBoardDimensions = new BoardDimensions(3,3);
         basicRunningState = new RunningState(new Journalist(Language.ENGLISH), new Scanner(System.in)::nextLine,
                                              new Board(sampleBoardDimensions), players);
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
@@ -118,7 +118,7 @@ public class ApplicationTests {
         //given
         int exampleWidth = 3;
         int exampleHeight = 5;
-        int[] dimensions = new int[]{exampleWidth, exampleHeight};
+        BoardDimensions dimensions = new BoardDimensions(exampleWidth, exampleHeight);
         //when
         Board board = new Board(dimensions);
         //then
@@ -131,7 +131,7 @@ public class ApplicationTests {
         int exampleWidth = 3;
         int exampleHeight = 5;
         //when
-        Board board = new Board(new int[]{exampleWidth, exampleHeight});
+        Board board = new Board(new BoardDimensions(exampleWidth, exampleHeight));
         //then
         assertEquals(board.getFields()[0].length, exampleHeight);
     }

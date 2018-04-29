@@ -18,7 +18,7 @@ public class SetUpState extends GameState {
     private void setUp() {
         players = manager.setUpPlayers();
         players.currentPlayer = manager.setUpFirstPlayer(players);
-        int[] dimensions = manager.getBoardsDimensions(new InputValidator(new InputConverter()));
+        BoardDimensions dimensions = manager.getBoardsDimensions(new InputValidator(new InputConverter()));
         board = new Board(dimensions);
         this.winningNumber = manager.getWinningNumber(new InputValidator(new InputConverter()), dimensions);
     }
@@ -26,7 +26,7 @@ public class SetUpState extends GameState {
 
     private void setDefaultsForTests() {
         players = new Players(Arrays.asList(new Player("foo", Sign.X), new Player("bar", Sign.O)), Sign.X);
-        int[] dimensions = new int[]{3,3};
+        BoardDimensions dimensions = new BoardDimensions(3,3);
         board = new Board(dimensions);
         this.winningNumber = 3;
         System.out.println("Test set up finished.");

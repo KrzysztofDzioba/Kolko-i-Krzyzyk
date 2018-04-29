@@ -6,20 +6,20 @@ public class Board {
     int width;
     int height;
 
-    public Board(int[] dimensions) {
-        this.fields = new Sign[dimensions[0]][dimensions[1]];
+    public Board(BoardDimensions dimensions) {
+        this.fields = new Sign[dimensions.width][dimensions.height];
         createBoardFields(dimensions);
-        this.width = fields[0].length;
-        this.height = fields[1].length;
+        this.width = dimensions.width;
+        this.height = dimensions.height;
     }
 
     public Sign[][] getFields() {
         return fields;
     }
 
-    private void createBoardFields(int[] dimensions) {
-        for(int i = 0; i < dimensions[0]; i++) {
-            for(int c = 0; c < dimensions[1]; c++) {
+    private void createBoardFields(BoardDimensions dimensions) {
+        for(int i = 0; i < dimensions.width; i++) {
+            for(int c = 0; c < dimensions.height; c++) {
                 fields[i][c] = Sign.EMPTY;
             }
         }

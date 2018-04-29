@@ -59,7 +59,7 @@ public class GameSessionManager {
         return players.getPlayer(sign);
     }
 
-    public int[] getBoardsDimensions(InputValidator validator) {
+    public BoardDimensions getBoardsDimensions(InputValidator validator) {
         journalist.sayMessage("Please tell me how the board should look like? Type: X,Y (where X is width and Y is height)");
         String userInput = userInputProvider.get();
         boolean wrongUserInput = true;
@@ -75,7 +75,7 @@ public class GameSessionManager {
         return null;
     }
 
-    public Integer getWinningNumber(InputValidator validator, int[] boardsDimensions) {
+    public Integer getWinningNumber(InputValidator validator, BoardDimensions boardsDimensions) {
         journalist.sayMessage("Please tell me how many signs in a row wins?");
         String userInput = userInputProvider.get();
         boolean wrongUserInput = true;

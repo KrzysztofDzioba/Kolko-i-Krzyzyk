@@ -17,14 +17,14 @@ public class InputValidator {
         return true;
     }
 
-    public boolean properWinningNumber(String userInput, int[] boardsDimensions) {
+    public boolean properWinningNumber(String userInput, BoardDimensions dimensions) {
         Integer value;
         try {
             value = Integer.valueOf(userInput);
         } catch (NumberFormatException e) {
             return false;
         }
-        return !(value > Math.max(boardsDimensions[0], boardsDimensions[1]));
+        return !(value > Math.max(dimensions.width, dimensions.height));
     }
 
     public boolean properCoordinates(String userInput) {
