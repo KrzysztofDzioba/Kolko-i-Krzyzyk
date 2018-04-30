@@ -12,15 +12,10 @@ import static org.testng.Assert.*;
 public class ApplicationTest {
 
     private GameSessionManager gameSessionManager;
-    private GameSession session;
     private Sign sampleSign = Sign.X;
     private InputValidator validator;
-    private GameState basicRunningState;
     private Players players;
     private BoardDimensions sampleBoardDimensions;
-    private Coordinates sampleCoordinates;
-
-
 
     @BeforeMethod
     private void setUp() {
@@ -32,7 +27,6 @@ public class ApplicationTest {
                                                     new InputConverter(), new InputValidator(new InputConverter()));
 
         validator = new InputValidator(new InputConverter());
-        sampleCoordinates = new Coordinates(2,2);
     }
 
     @Test
