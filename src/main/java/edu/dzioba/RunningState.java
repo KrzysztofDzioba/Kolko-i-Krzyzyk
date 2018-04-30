@@ -4,9 +4,8 @@ import java.util.function.Supplier;
 
 public class RunningState extends GameState {
 
-
-    RunningState(Journalist output, Supplier<String> input, Board board, Players players) {
-        super(output, input, board, players);
+    RunningState(Journalist output, Supplier<String> input, Players players, Games games) {
+        super(output, input, players, games);
     }
 
     RunningState(GameState previousState) {
@@ -15,9 +14,11 @@ public class RunningState extends GameState {
 
     @Override
     GameState getNextState() {
-        journalist.sayMessageWithParameters("Player %s. Please make your move.");
-        String userInput = input.get();
+        Coordinates cords = manager.getCoordinates(players.currentPlayer, getCurrentGame().board.dimensions, getCurrentGame());
+        getCurrentGame().board.insertCoordinates(cords, players.getCurrentsPlayerSign());
         players.currentPlayer = players.getNextPlayer();
         return new WinState(this);
     }
+
+
 }

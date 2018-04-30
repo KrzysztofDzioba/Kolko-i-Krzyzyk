@@ -8,12 +8,14 @@ public class GameSessionManager {
     Supplier<String> userInputProvider;
     private Journalist journalist;
     private GameSession session;
-    private InputConverter converter;
+    InputConverter converter;
+    InputValidator validator;
 
-    public GameSessionManager(Supplier<String> userInputProvider, Journalist journalist, InputConverter converter) {
+    public GameSessionManager(Supplier<String> userInputProvider, Journalist journalist, InputConverter converter, InputValidator validator) {
         this.userInputProvider = userInputProvider;
         this.journalist = journalist;
         this.converter = converter;
+        this.validator = validator;
     }
 
     public Player getWinner() { // TODO
@@ -57,7 +59,7 @@ public class GameSessionManager {
         return players.getPlayer(sign);
     }
 
-    public int[] getBoardsDimensions(InputValidator validator) {
+    public BoardDimensions getBoardsDimensions(InputValidator validator) {
         journalist.sayMessage("Please tell me how the board should look like? Type: X,Y (where X is width and Y is height)");
         String userInput = userInputProvider.get();
         boolean wrongUserInput = true;
@@ -73,7 +75,7 @@ public class GameSessionManager {
         return null;
     }
 
-    public Integer getWinningNumber(InputValidator validator, int[] boardsDimensions) {
+    public Integer getWinningNumber(InputValidator validator, BoardDimensions boardsDimensions) {
         journalist.sayMessage("Please tell me how many signs in a row wins?");
         String userInput = userInputProvider.get();
         boolean wrongUserInput = true;
@@ -88,5 +90,31 @@ public class GameSessionManager {
             }
         }
         return null;
+    }
+
+    Coordinates getCoordinates(Player currentPlayer, BoardDimensions dimensions, Game currentGame) {
+        journalist.sayMessageWithParameters("Player %s. Please make your move.", currentPlayer.toString());
+        String userInput = userInputProvider.get();
+        Coordinates cords = null;
+        boolean wrongUserInput = true;
+        while(wrongUserInput) {
+            boolean validCoordsSchema = validator.properCoordinatesSchema(userInput);
+            if(validCoordsSchema) {
+                Coordinates coords = converter.getCoordinates(userInput);
+                boolean coordsInBoard = validator.coordinatesInBoard(dimensions, coords);
+                boolean coordsEmpty = validator.coordsAreEmptyInBoard(currentGame.board, coords);
+                if(coordsInBoard && coordsEmpty)
+                    return converter.getCoordinates(userInput);
+                else {
+                    journalist.sayMessage("Given field is not in board or isn't empty anymore");
+                    userInput = userInputProvider.get();
+                }
+            }
+            else {
+                journalist.sayMessage("You provided coordinates in a bad way. Do it like this: 2 3");
+                userInput = userInputProvider.get();
+            }
+        }
+        return cords;
     }
 }

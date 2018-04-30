@@ -11,7 +11,7 @@
 
 #### Lista funkcjonalności:
 1. Nadanie graczom imion na początku gry
-2. Graczowi przydzielone są jego symbole (X lub O) w trakcie ich tworzenia
+2. Graczowi przydzine są jego symbole (X lub O) w trakcie ich tworzenia
 3. Program pyta, który gracz ma zacząć
 4. Gracz potrafi ustalić szerokość planszy na początku sesji gry
 5. Gracz wprowadza ile znaków musi być z rzędu, aby nastąpiła wygrana

@@ -1,27 +1,24 @@
 package edu.dzioba;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Board {
 
-    private Sign[][] fields;
-    int width;
-    int height;
+    private Map<Coordinates, Sign> fields;
+    BoardDimensions dimensions;
 
-    public Board(int[] dimensions) {
-        this.fields = new Sign[dimensions[0]][dimensions[1]];
-        createBoardFields(dimensions);
-        this.width = fields[0].length;
-        this.height = fields[1].length;
+    public Board(BoardDimensions dimensions) {
+        this.fields = new HashMap<>();
+        this.dimensions = dimensions;
     }
 
-    public Sign[][] getFields() {
-        return fields;
+    public void insertCoordinates(Coordinates coordinates, Sign sign) {
+        fields.put(coordinates, sign);
     }
 
-    private void createBoardFields(int[] dimensions) {
-        for(int i = 0; i < dimensions[0]; i++) {
-            for(int c = 0; c < dimensions[1]; c++) {
-                fields[i][c] = Sign.EMPTY;
-            }
-        }
+    public Sign getField(Coordinates cords) {
+        return fields.get(cords);
     }
+
 }
