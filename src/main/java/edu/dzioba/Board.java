@@ -21,6 +21,10 @@ public class Board {
         return fields.get(cords);
     }
 
+    public Sign getField(int row, int col) {
+        return getField(new Coordinates(row, col));
+    }
+
     public void insertCoordinates(int row, int col, Sign sign) {
         insertCoordinates(new Coordinates(row, col), sign);
     }
