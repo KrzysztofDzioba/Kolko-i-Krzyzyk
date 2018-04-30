@@ -10,8 +10,8 @@ public class SetUpState extends GameState {
 
     @Override
     GameState getNextState() {
-//        setUp(); // PRODUCTION MODE
-        setDefaultsForTests(); // TEST MODE
+        setUp(); // PRODUCTION MODE
+//        setDefaultsForTests(); // TEST MODE
         return new RunningState(this);
     }
 
@@ -19,7 +19,8 @@ public class SetUpState extends GameState {
         players = manager.setUpPlayers();
         players.currentPlayer = manager.setUpFirstPlayer(players);
         BoardDimensions dimensions = manager.getBoardsDimensions(new InputValidator(new InputConverter()));
-        board = new Board(dimensions);
+        games = new Games(Games.initializeGames(dimensions));
+        getCurrentGame().board = new Board(dimensions);
         this.winningNumber = manager.getWinningNumber(new InputValidator(new InputConverter()), dimensions);
     }
 
@@ -27,7 +28,8 @@ public class SetUpState extends GameState {
     private void setDefaultsForTests() {
         players = new Players(Arrays.asList(new Player("foo", Sign.X), new Player("bar", Sign.O)), Sign.X);
         BoardDimensions dimensions = new BoardDimensions(3,3);
-        board = new Board(dimensions);
+        games = new Games(Games.initializeGames(dimensions));
+        getCurrentGame().board = new Board(dimensions);
         this.winningNumber = 3;
         System.out.println("Test set up finished.");
     }

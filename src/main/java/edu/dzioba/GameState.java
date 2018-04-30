@@ -10,24 +10,23 @@ public abstract class GameState {
     Journalist journalist;
     Supplier<String> input;
     Players players;
-    Board board;
     GameSessionManager manager;
     int winningNumber;
 
 
-    GameState(Journalist output, Supplier<String> input, Board board, Players players) {
+    GameState(Journalist output, Supplier<String> input, Players players, Games games) {
         this.journalist = output;
         this.input = input;
-        this.board = board;
         this.players = players;
+        this.games = games;
     }
 
     GameState(GameState previousState) {
         this.journalist = previousState.journalist;
         this.input = previousState.input;
-        this.board = previousState.board;
         this.players = previousState.players;
         this.manager = previousState.manager;
+        this.games = previousState.games;
     }
 
     GameState(GameSessionManager manager) {
@@ -36,12 +35,8 @@ public abstract class GameState {
         this.manager = manager;
     }
 
-    public void addGame(Game game) {
-        games.add(game);
-    }
-
-    public void addPlayer(Player player) {
-        players.addPlayer(player);
+    Game getCurrentGame() {
+        return games.currentGame;
     }
 
     abstract GameState getNextState();

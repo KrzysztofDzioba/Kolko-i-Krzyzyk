@@ -27,8 +27,12 @@ public class InputValidator {
         return !(value > Math.max(dimensions.width, dimensions.height));
     }
 
-    public boolean properCoordinates(String userInput) {
+    public boolean properCoordinatesSchema(String userInput) {
+        if(userInput == null)
+            return false;
         String[] coordinatesStr = userInput.split(" ");
+        if(coordinatesStr.length == 1)
+            return false;
         try {
             Integer.valueOf(coordinatesStr[0]);
             Integer.valueOf(coordinatesStr[1]);
@@ -36,5 +40,14 @@ public class InputValidator {
             return false;
         }
         return true;
+    }
+
+    public boolean coordinatesInBoard(BoardDimensions dimensions, Coordinates cords) {
+        return cords.getRow() <= dimensions.height && cords.getCol() <= dimensions.width &&
+               (cords.getRow() >= 1 && cords.getCol() >= 1);
+    }
+
+    public boolean coordsAreEmptyInBoard(Board board, Coordinates coords) {
+        return board.getField(coords) == null;
     }
 }

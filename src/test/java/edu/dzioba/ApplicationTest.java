@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import static org.testng.Assert.*;
 
-public class ApplicationTests {
+public class ApplicationTest {
 
     private GameSessionManager gameSessionManager;
     private GameSession session;
@@ -17,7 +17,9 @@ public class ApplicationTests {
     private InputValidator validator;
     private GameState basicRunningState;
     private Players players;
-    BoardDimensions sampleBoardDimensions;
+    private BoardDimensions sampleBoardDimensions;
+    private Coordinates sampleCoordinates;
+
 
 
     @BeforeMethod
@@ -25,13 +27,17 @@ public class ApplicationTests {
 //        Sign[][] fields = new Sign[3][3];
         players = new Players(Arrays.asList(new Player("foo", Sign.X), new Player("bar", Sign.O)), Sign.X);
         sampleBoardDimensions = new BoardDimensions(3,3);
+
         basicRunningState = new RunningState(new Journalist(Language.ENGLISH), new Scanner(System.in)::nextLine,
-                                             new Board(sampleBoardDimensions), players);
+                                             players, new Games(Games.initializeGames(sampleBoardDimensions)));
+
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                     new Journalist(Language.ENGLISH),
                                                     new InputConverter(), new InputValidator(new InputConverter()));
+
         session = new GameSession(gameSessionManager, new RunningState(basicRunningState));
         validator = new InputValidator(new InputConverter());
+        sampleCoordinates = new Coordinates(2,2);
     }
 
     @Test
@@ -47,8 +53,7 @@ public class ApplicationTests {
     @Test
     public void games_returns_true_if_there_is_end_of_gameSession_because_3_games_were_played() {
         //given
-        Games games = new Games(new ArrayList<>());
-        games.add(new Game());
+        Games games = new Games(Games.initializeGames(sampleBoardDimensions));
         games.add(new Game());
         games.add(new Game());
         //when
@@ -121,7 +126,7 @@ public class ApplicationTests {
         //when
         Board board = new Board(dimensions);
         //then
-        assertEquals(board.width, exampleWidth);
+        assertEquals(board.dimensions.width, exampleWidth);
     }
 
     @Test
@@ -132,7 +137,7 @@ public class ApplicationTests {
         //when
         Board board = new Board(new BoardDimensions(exampleWidth, exampleHeight));
         //then
-        assertEquals(board.height, exampleHeight);
+        assertEquals(board.dimensions.height, exampleHeight);
     }
 
     @Test
@@ -209,7 +214,7 @@ public class ApplicationTests {
         InputValidator validator = new InputValidator(new InputConverter());
         String userInput = "1 1";
         //when
-        boolean validCoordinates = validator.properCoordinates(userInput);
+        boolean validCoordinates = validator.properCoordinatesSchema(userInput);
         //then
         assertTrue(validCoordinates);
     }
@@ -220,7 +225,7 @@ public class ApplicationTests {
         InputValidator validator = new InputValidator(new InputConverter());
         String userInput = "ac2";
         //when
-        boolean validCoordinates = validator.properCoordinates(userInput);
+        boolean validCoordinates = validator.properCoordinatesSchema(userInput);
         //then
         assertTrue(!validCoordinates);
     }
@@ -258,6 +263,58 @@ public class ApplicationTests {
         Sign sign = players.getCurrentsPlayerSign();
         //then
         assertEquals(sign, Sign.X);
+    }
+
+    @Test
+    public void validator_returns_true_if_provided_coordinates_are_inside_a_board() {
+        //given
+        BoardDimensions dimensions = new BoardDimensions(2, 2);
+        Coordinates cords = new Coordinates(2, 2);
+        //when
+        boolean cordsInsideABoard = validator.coordinatesInBoard(dimensions, cords);
+        //then
+        assertTrue(cordsInsideABoard);
+    }
+
+    @Test
+    public void validator_returns_false_if_provided_null_to_check_coordinates_schema() {
+        //given
+        String userInput = null;
+        //when
+        boolean wrongSchema = validator.properCoordinatesSchema(userInput);
+        //then
+        assertTrue(!wrongSchema);
+    }
+
+    @Test
+    public void validator_returns_false_if_provided_1_word_to_check_coordinates_schema() {
+        String userInput = "Foo";
+        //when
+        boolean wrongSchema = validator.properCoordinatesSchema(userInput);
+        //then
+        assertTrue(!wrongSchema);
+    }
+
+    @Test
+    public void validator_returns_true_if_in_given_coord_there_is_no_sign() {
+        //given
+        Coordinates sampleCoords1 = new Coordinates(1, 1);
+        //when
+        boolean fieldIsEmpty = validator.coordsAreEmptyInBoard(new Board(sampleBoardDimensions), sampleCoords1);
+        //then
+        assertTrue(fieldIsEmpty);
+    }
+
+    @Test
+    public void validator_returns_false_if_in_given_coord_there_is_a_sign() {
+        //given
+        Coordinates sampleCoords1 = new Coordinates(1, 1);
+        Board board = new Board(sampleBoardDimensions);
+        board.insertCoordinates(sampleCoords1, sampleSign);
+        //when
+        boolean fieldIsEmpty = validator.coordsAreEmptyInBoard(board, sampleCoords1);
+        //then
+        assertTrue(!fieldIsEmpty);
     }
 
 }

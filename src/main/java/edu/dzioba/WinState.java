@@ -8,7 +8,7 @@ public class WinState extends GameState {
 
     @Override
     GameState getNextState() {
-        System.out.println("Win");
+        System.out.println("Win State");
         return new RunningState(this);
     }
 }

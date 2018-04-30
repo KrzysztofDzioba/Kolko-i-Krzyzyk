@@ -6,13 +6,11 @@ import java.util.Map;
 public class Board {
 
     private Map<Coordinates, Sign> fields;
-    int width;
-    int height;
+    BoardDimensions dimensions;
 
     public Board(BoardDimensions dimensions) {
         this.fields = new HashMap<>();
-        this.width = dimensions.width;
-        this.height = dimensions.height;
+        this.dimensions = dimensions;
     }
 
     public void insertCoordinates(Coordinates coordinates, Sign sign) {

@@ -92,14 +92,23 @@ public class GameSessionManager {
         return null;
     }
 
-    Coordinates getCoordinates(Player currentPlayer) {
+    Coordinates getCoordinates(Player currentPlayer, BoardDimensions dimensions, Game currentGame) {
         journalist.sayMessageWithParameters("Player %s. Please make your move.", currentPlayer.toString());
         String userInput = userInputProvider.get();
         Coordinates cords = null;
         boolean wrongUserInput = true;
         while(wrongUserInput) {
-            if(validator.properCoordinates(userInput)) {
-                return converter.getCoordinates(userInput);
+            boolean validCoordsSchema = validator.properCoordinatesSchema(userInput);
+            if(validCoordsSchema) {
+                Coordinates coords = converter.getCoordinates(userInput);
+                boolean coordsInBoard = validator.coordinatesInBoard(dimensions, coords);
+                boolean coordsEmpty = validator.coordsAreEmptyInBoard(currentGame.board, coords);
+                if(coordsInBoard && coordsEmpty)
+                    return converter.getCoordinates(userInput);
+                else {
+                    journalist.sayMessage("Given field is not in board or isn't empty anymore");
+                    userInput = userInputProvider.get();
+                }
             }
             else {
                 journalist.sayMessage("You provided coordinates in a bad way. Do it like this: 2 3");
