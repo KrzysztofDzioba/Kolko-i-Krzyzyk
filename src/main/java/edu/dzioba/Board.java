@@ -21,4 +21,7 @@ public class Board {
         return fields.get(cords);
     }
 
+    public void insertCoordinates(int row, int col, Sign sign) {
+        insertCoordinates(new Coordinates(row, col), sign);
+    }
 }

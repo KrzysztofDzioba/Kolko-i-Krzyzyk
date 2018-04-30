@@ -14,4 +14,11 @@ public class InputConverter {
         return new Coordinates(Integer.valueOf(cordsStr[0]), Integer.valueOf(cordsStr[1]));
     }
 
+    public Integer parseToInteger(String input) throws NumberFormatException{
+        return Integer.valueOf(input);
+    }
+
+    public String[] splitStringIntoCoordinates(String userInput) {
+        return userInput.split(" ");
+    }
 }

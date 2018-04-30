@@ -8,6 +8,9 @@ public class InputValidator {
         this.converter = converter;
     }
 
+    public InputValidator() {
+    }
+
     public boolean properBoardSizeInput(String boardSize) {
         try {
             converter.getBoardSize(boardSize);
@@ -20,7 +23,7 @@ public class InputValidator {
     public boolean properWinningNumber(String userInput, BoardDimensions dimensions) {
         Integer value;
         try {
-            value = Integer.valueOf(userInput);
+            value = converter.parseToInteger(userInput);
         } catch (NumberFormatException e) {
             return false;
         }
@@ -28,9 +31,10 @@ public class InputValidator {
     }
 
     public boolean properCoordinatesSchema(String userInput) {
+        String[] coordinatesStr;
         if(userInput == null)
             return false;
-        String[] coordinatesStr = userInput.split(" ");
+        coordinatesStr = converter.splitStringIntoCoordinates(userInput);
         if(coordinatesStr.length == 1 || coordinatesStr.length == 0)
             return false;
         try {

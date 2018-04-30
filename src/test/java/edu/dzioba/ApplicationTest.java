@@ -24,18 +24,13 @@ public class ApplicationTest {
 
     @BeforeMethod
     private void setUp() {
-//        Sign[][] fields = new Sign[3][3];
         players = new Players(Arrays.asList(new Player("foo", Sign.X), new Player("bar", Sign.O)), Sign.X);
         sampleBoardDimensions = new BoardDimensions(3,3);
-
-        basicRunningState = new RunningState(new Journalist(Language.ENGLISH), new Scanner(System.in)::nextLine,
-                                             players, new Games(Games.initializeGames(sampleBoardDimensions)));
 
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                     new Journalist(Language.ENGLISH),
                                                     new InputConverter(), new InputValidator(new InputConverter()));
 
-        session = new GameSession(gameSessionManager, new RunningState(basicRunningState));
         validator = new InputValidator(new InputConverter());
         sampleCoordinates = new Coordinates(2,2);
     }
@@ -292,7 +287,7 @@ public class ApplicationTest {
         //when
         boolean wrongSchema = validator.properCoordinatesSchema(userInput);
         //then
-        assertTrue(!wrongSchema);
+        assertFalse(wrongSchema);
     }
 
     @Test
