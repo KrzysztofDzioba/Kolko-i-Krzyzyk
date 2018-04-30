@@ -48,10 +48,11 @@ public class InputValidator {
 
     public boolean coordinatesInBoard(BoardDimensions dimensions, Coordinates cords) {
         return cords.getRow() <= dimensions.height && cords.getCol() <= dimensions.width &&
-               (cords.getRow() >= 1 && cords.getCol() >= 1);
+                (cords.getRow() >= 1 && cords.getCol() >= 1);
     }
 
     public boolean coordsAreEmptyInBoard(Board board, Coordinates coords) {
         return board.getField(coords) == null;
     }
+
 }
