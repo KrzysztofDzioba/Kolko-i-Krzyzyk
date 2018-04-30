@@ -31,7 +31,7 @@ public class InputValidator {
         if(userInput == null)
             return false;
         String[] coordinatesStr = userInput.split(" ");
-        if(coordinatesStr.length == 1)
+        if(coordinatesStr.length == 1 || coordinatesStr.length == 0)
             return false;
         try {
             Integer.valueOf(coordinatesStr[0]);
