@@ -193,4 +193,19 @@ public class WinCheckerTest {
         assertFalse(winnerExists);
     }
 
+    @Test
+    public void win_checker_returns_false_if_opposite_sign_is_in_line() {
+        //given
+        int winningNumber = 2;
+        WinChecker winChecker = new WinChecker(winningNumber, new InputValidator());
+        Board board = new Board(new BoardDimensions(3, 3));
+        board.insertCoordinates(1, 1, Sign.X);
+        board.insertCoordinates(2, 2, Sign.O);
+        Coordinates coords = new Coordinates(3, 3);
+        //when
+        boolean winnerExists = winChecker.isWinner(Sign.X, board, coords);
+        //then
+        assertFalse(winnerExists);
+    }
+
 }
