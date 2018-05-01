@@ -33,7 +33,7 @@ public class WinChecker {
         int coordsRow = winningCoords.getRow();
         int coordsCol = winningCoords.getCol();
         Sign oppositeSign = Sign.getOppositeSign(winningSign);
-        for(int row = coordsRow, col = coordsCol; coordsInBoard(board, row, col); row += rowIncreaser, col += colIncreaser) {
+        for(int row = coordsRow + rowIncreaser, col = coordsCol + colIncreaser; coordsInBoard(board, row, col); row += rowIncreaser, col += colIncreaser) {
                 Sign fieldChecking = board.getField(row, col);
                 if(fieldChecking == winningSign)
                     signsInARowCounter++;
