@@ -20,6 +20,7 @@ public class WinChecker {
         int signsOnLeft = signsInARowCounter(winningSign, board, winningCoords, 0, -1);
         int signsOnLeftDown = signsInARowCounter(winningSign, board, winningCoords, 1, -1);
         int signsOnDown = signsInARowCounter(winningSign, board, winningCoords, 1, 0);
+
         return self + signsOnDownRight + signsOnLeftUp >= winningSignNumber ||
                 self + signsOnRight + signsOnLeft >= winningSignNumber ||
                 self + signsOnRightUp + signsOnLeftDown >= winningSignNumber ||
@@ -31,9 +32,13 @@ public class WinChecker {
         int signsInARowCounter = 0;
         int coordsRow = winningCoords.getRow();
         int coordsCol = winningCoords.getCol();
+        Sign oppositeSign = Sign.getOppositeSign(winningSign);
         for(int row = coordsRow, col = coordsCol; coordsInBoard(board, row, col); row += rowIncreaser, col += colIncreaser) {
-                if(board.getField(row, col) == winningSign)
+                Sign fieldChecking = board.getField(row, col);
+                if(fieldChecking == winningSign)
                     signsInARowCounter++;
+                else if(fieldChecking == oppositeSign)
+                    break;
         }
         return signsInARowCounter;
     }
