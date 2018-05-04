@@ -33,7 +33,7 @@ public abstract class GameState {
     }
 
     boolean isWinnerInGame(Coordinates coords) {
-        return winChecker.isWinner(players.getCurrentsPlayerSign(), games.currentGame.board, coords);
+        return winChecker.isWinner(games.currentGame.board, coords);
     }
 
     abstract GameState getNextState();

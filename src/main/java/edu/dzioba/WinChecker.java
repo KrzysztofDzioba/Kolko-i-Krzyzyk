@@ -10,16 +10,16 @@ public class WinChecker {
         this.validator = validator;
     }
 
-    public boolean isWinner(Sign winningSign, Board board, Coordinates winningCoords) {
+    public boolean isWinner(Board board, Coordinates winningCoords) {
         int self = 1; // 1 because given sign is counting here
-        int signsOnDownRight = signsInARowCounter(winningSign, board, winningCoords, 1, 1);
-        int signsOnRight = signsInARowCounter(winningSign, board, winningCoords, 0, 1);
-        int signsOnRightUp = signsInARowCounter(winningSign, board, winningCoords, -1, 1);
-        int signsUp = signsInARowCounter(winningSign, board, winningCoords, -1, 0);
-        int signsOnLeftUp = signsInARowCounter(winningSign, board, winningCoords, -1, -1);
-        int signsOnLeft = signsInARowCounter(winningSign, board, winningCoords, 0, -1);
-        int signsOnLeftDown = signsInARowCounter(winningSign, board, winningCoords, 1, -1);
-        int signsOnDown = signsInARowCounter(winningSign, board, winningCoords, 1, 0);
+        int signsOnDownRight = signsInARowCounter(board, winningCoords, 1, 1);
+        int signsOnRight = signsInARowCounter(board, winningCoords, 0, 1);
+        int signsOnRightUp = signsInARowCounter( board, winningCoords, -1, 1);
+        int signsUp = signsInARowCounter(board, winningCoords, -1, 0);
+        int signsOnLeftUp = signsInARowCounter( board, winningCoords, -1, -1);
+        int signsOnLeft = signsInARowCounter(board, winningCoords, 0, -1);
+        int signsOnLeftDown = signsInARowCounter(board, winningCoords, 1, -1);
+        int signsOnDown = signsInARowCounter(board, winningCoords, 1, 0);
 
         return self + signsOnDownRight + signsOnLeftUp >= winningSignNumber ||
                 self + signsOnRight + signsOnLeft >= winningSignNumber ||
@@ -27,9 +27,10 @@ public class WinChecker {
                 self + signsUp + signsOnDown >= winningSignNumber;
     }
 
-    private int signsInARowCounter(Sign winningSign, Board board, Coordinates winningCoords,
+    private int signsInARowCounter(Board board, Coordinates winningCoords,
                                    int rowIncreaser, int colIncreaser) {
         int signsInARowCounter = 0;
+        Sign winningSign = board.getField(winningCoords);
         int coordsRow = winningCoords.getRow();
         int coordsCol = winningCoords.getCol();
         Sign oppositeSign = Sign.getOppositeSign(winningSign);

@@ -33,7 +33,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(2, 2, winningSign);
         sample3x3Board.insertCoordinates(winningCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, winningCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, winningCoords);
         //then
         assertTrue(winnerExists);
     }
@@ -46,7 +46,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(2, 2, winningSign);
         sample3x3Board.insertCoordinates(loosingCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, loosingCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, loosingCoords);
         //then
         assertFalse(winnerExists);
     }
@@ -59,7 +59,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(2, 2, winningSign);
         sample3x3Board.insertCoordinates(winningCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, winningCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, winningCoords);
         //then
         assertTrue(winnerExists);
     }
@@ -72,7 +72,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(2, 2, winningSign);
         sample3x3Board.insertCoordinates(loosingCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, loosingCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, loosingCoords);
         //then
         assertFalse(winnerExists);
     }
@@ -85,7 +85,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(1, 3, winningSign);
         sample3x3Board.insertCoordinates(winningCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, winningCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, winningCoords);
         //then
         assertTrue(winnerExists);
     }
@@ -98,7 +98,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(1, 3, winningSign);
         sample3x3Board.insertCoordinates(loosingCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, loosingCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, loosingCoords);
         //then
         assertFalse(winnerExists);
     }
@@ -111,7 +111,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(1, 2, winningSign);
         sample3x3Board.insertCoordinates(winningCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, winningCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, winningCoords);
         //then
         assertTrue(winnerExists);
     }
@@ -124,7 +124,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(1, 2, winningSign);
         sample3x3Board.insertCoordinates(loosingCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, loosingCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, loosingCoords);
         //then
         assertFalse(winnerExists);
     }
@@ -137,7 +137,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(1, 1, winningSign);
         sample3x3Board.insertCoordinates(winningCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, winningCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, winningCoords);
         //then
         assertTrue(winnerExists);
     }
@@ -150,7 +150,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(1, 1, winningSign);
         sample3x3Board.insertCoordinates(loosingCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, loosingCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, loosingCoords);
         //then
         assertFalse(winnerExists);
     }
@@ -163,7 +163,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(3, 1, winningSign);
         sample3x3Board.insertCoordinates(winningCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, winningCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, winningCoords);
         //then
         assertTrue(winnerExists);
     }
@@ -176,7 +176,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(3, 1, winningSign);
         sample3x3Board.insertCoordinates(loosingCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, loosingCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, loosingCoords);
         //then
         assertFalse(winnerExists);
     }
@@ -189,7 +189,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(3, 1, winningSign);
         sample3x3Board.insertCoordinates(winningCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, winningCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, winningCoords);
         //then
         assertTrue(winnerExists);
     }
@@ -202,7 +202,7 @@ public class WinCheckerTest {
         sample3x3Board.insertCoordinates(3, 1, winningSign);
         sample3x3Board.insertCoordinates(loosingCoords, winningSign);
         //when
-        boolean winnerExists = sampleWinChecker.isWinner(winningSign, sample3x3Board, loosingCoords);
+        boolean winnerExists = sampleWinChecker.isWinner(sample3x3Board, loosingCoords);
         //then
         assertFalse(winnerExists);
     }
@@ -215,9 +215,10 @@ public class WinCheckerTest {
         Board board = new Board(new BoardDimensions(3, 3));
         board.insertCoordinates(1, 1, Sign.X);
         board.insertCoordinates(2, 2, Sign.O);
+        board.insertCoordinates(3, 3, Sign.X);
         Coordinates coords = new Coordinates(3, 3);
         //when
-        boolean winnerExists = winChecker.isWinner(Sign.X, board, coords);
+        boolean winnerExists = winChecker.isWinner(board, coords);
         //then
         assertFalse(winnerExists);
     }
