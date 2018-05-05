@@ -8,7 +8,13 @@ public class WinState extends GameState {
 
     @Override
     GameState getNextState() {
-        System.out.println("Win State");
-        return new RunningState(this);
+        journalist.sayMessageWithParameters("Congratulations player %s! You won this game." +
+                                                    " 3 points are going to your account.",
+                                                    players.currentPlayer.toString());
+        players.currentPlayer.addPoints(3);
+
+
+
+        return new GameBeginningState(this);
     }
 }

@@ -3,10 +3,12 @@ package edu.dzioba;
 public class Player {
     private String name;
     Sign sign;
+    private int points;
 
     Player(String name, Sign x) {
         this.name = name;
-        sign = x;
+        this.sign = x;
+        this.points = 0;
     }
 
     public void setName(String playerName) {
@@ -20,5 +22,13 @@ public class Player {
     @Override
     public String toString() {
         return name + " (" + sign + ")";
+    }
+
+    public void addPoints(int wonPoints) {
+        this.points += wonPoints;
+    }
+
+    public int getPoints() {
+        return points;
     }
 }

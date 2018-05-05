@@ -56,7 +56,8 @@ public class GameSessionManager {
 
     public Player setUpFirstPlayer(Players players) {
         Sign sign = askWhoShouldBegin();
-        return players.getPlayer(sign);
+        Sign firstPlayerSign = Sign.getOppositeSign(sign); // opposite because in RunningState at the beginning there is current player swapping
+        return players.getPlayer(firstPlayerSign);
     }
 
     public BoardDimensions getBoardsDimensions(InputValidator validator) {
