@@ -43,8 +43,9 @@ public class ApplicationTest {
     public void games_returns_true_if_there_is_end_of_gameSession_because_3_games_were_played() {
         //given
         Games games = new Games(Games.initializeGames(sampleBoardDimensions));
-        games.add(new Game());
-        games.add(new Game());
+        games.setBoardDimensions(sampleBoardDimensions);
+        games.addNewGame();
+        games.addNewGame();
         //when
         boolean gameSessionEnded = games.threeGamesWerePlayed();
         //then
@@ -304,6 +305,17 @@ public class ApplicationTest {
         boolean fieldIsEmpty = validator.coordsAreEmptyInBoard(board, sampleCoords1);
         //then
         assertTrue(!fieldIsEmpty);
+    }
+
+    @Test
+    public void manager_is_able_to_add_given_number_of_points_to_the_player() {
+        //given
+        int wonPoints = 3;
+        Player playerWhoWon = new Player("foo", Sign.X);
+        //when
+        playerWhoWon.addPoints(wonPoints);
+        //then
+        assertEquals(playerWhoWon.getPoints(), 3);
     }
 
 }

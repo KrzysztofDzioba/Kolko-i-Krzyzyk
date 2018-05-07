@@ -20,6 +20,7 @@ public class SetUpState extends GameState {
         players.currentPlayer = manager.setUpFirstPlayer(players);
         BoardDimensions dimensions = manager.getBoardsDimensions(new InputValidator(new InputConverter()));
         games = new Games(Games.initializeGames(dimensions));
+        games.setBoardDimensions(dimensions);
         getCurrentGame().board = new Board(dimensions);
         int winningNumber = manager.getWinningNumber(new InputValidator(new InputConverter()), dimensions);
         this.winChecker = new WinChecker(winningNumber, new InputValidator());
@@ -30,6 +31,7 @@ public class SetUpState extends GameState {
         players = new Players(Arrays.asList(new Player("foo", Sign.X), new Player("bar", Sign.O)), Sign.X);
         BoardDimensions dimensions = new BoardDimensions(3,3);
         games = new Games(Games.initializeGames(dimensions));
+        games.setBoardDimensions(dimensions);
         getCurrentGame().board = new Board(dimensions);
         int winningNumber = 3;
         this.winChecker = new WinChecker(winningNumber, new InputValidator());
