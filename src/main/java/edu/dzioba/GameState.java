@@ -11,15 +11,7 @@ public abstract class GameState {
     Supplier<String> input;
     Players players;
     GameSessionManager manager;
-    int winningNumber;
-
-
-    GameState(Journalist output, Supplier<String> input, Players players, Games games) {
-        this.journalist = output;
-        this.input = input;
-        this.players = players;
-        this.games = games;
-    }
+    WinChecker winChecker;
 
     GameState(GameState previousState) {
         this.journalist = previousState.journalist;
@@ -27,6 +19,7 @@ public abstract class GameState {
         this.players = previousState.players;
         this.manager = previousState.manager;
         this.games = previousState.games;
+        this.winChecker = previousState.winChecker;
     }
 
     GameState(GameSessionManager manager) {
@@ -37,6 +30,10 @@ public abstract class GameState {
 
     Game getCurrentGame() {
         return games.currentGame;
+    }
+
+    boolean isWinnerInGame(Coordinates coords) {
+        return winChecker.isWinner(games.currentGame.board, coords);
     }
 
     abstract GameState getNextState();

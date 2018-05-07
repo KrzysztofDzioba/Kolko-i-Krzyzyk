@@ -1,12 +1,6 @@
 package edu.dzioba;
 
-import java.util.function.Supplier;
-
 public class RunningState extends GameState {
-
-    RunningState(Journalist output, Supplier<String> input, Players players, Games games) {
-        super(output, input, players, games);
-    }
 
     RunningState(GameState previousState) {
         super(previousState);
@@ -14,10 +8,18 @@ public class RunningState extends GameState {
 
     @Override
     GameState getNextState() {
-        Coordinates cords = manager.getCoordinates(players.currentPlayer, getCurrentGame().board.dimensions, getCurrentGame());
-        getCurrentGame().board.insertCoordinates(cords, players.getCurrentsPlayerSign());
         players.currentPlayer = players.getNextPlayer();
-        return new WinState(this);
+        Coordinates cords = manager.getCoordinates(players.currentPlayer, getCurrentGame().board.dimensions, getCurrentGame());
+        if(cords == null) {
+            players.currentPlayer = players.getNextPlayer();
+            return new WinState(this);
+        }
+        getCurrentGame().board.insertCoordinates(cords, players.getCurrentsPlayerSign());
+        if(getCurrentGame().board.isDraw())
+            return new DrawState(this);
+        else if(isWinnerInGame(cords))
+            return new WinState(this);
+        return new RunningState(this);
     }
 
 

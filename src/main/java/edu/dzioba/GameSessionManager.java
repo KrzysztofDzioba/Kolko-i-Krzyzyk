@@ -50,13 +50,10 @@ public class GameSessionManager {
         return Sign.valueOf(userInput);
     }
 
-    public void setUpSession(GameSession gameSession) {
-        this.session = gameSession;
-    }
-
-    public Player setUpFirstPlayer(Players players) {
+    public Player getFirstPlayer(Players players) {
         Sign sign = askWhoShouldBegin();
-        return players.getPlayer(sign);
+        Sign firstPlayerSign = Sign.getOppositeSign(sign); // opposite because in RunningState at the beginning there is current player swapping
+        return players.getPlayer(firstPlayerSign);
     }
 
     public BoardDimensions getBoardsDimensions(InputValidator validator) {
@@ -95,9 +92,10 @@ public class GameSessionManager {
     Coordinates getCoordinates(Player currentPlayer, BoardDimensions dimensions, Game currentGame) {
         journalist.sayMessageWithParameters("Player %s. Please make your move.", currentPlayer.toString());
         String userInput = userInputProvider.get();
-        Coordinates cords = null;
         boolean wrongUserInput = true;
         while(wrongUserInput) {
+            if(userInput.equals("q"))
+                break;
             boolean validCoordsSchema = validator.properCoordinatesSchema(userInput);
             if(validCoordsSchema) {
                 Coordinates coords = converter.getCoordinates(userInput);
@@ -115,6 +113,6 @@ public class GameSessionManager {
                 userInput = userInputProvider.get();
             }
         }
-        return cords;
+        return null;
     }
 }

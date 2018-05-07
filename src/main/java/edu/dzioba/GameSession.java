@@ -10,7 +10,6 @@ public class GameSession {
     }
 
     public void start() {
-//        setUp();
         while (GameState.gamesAlreadyPlayed < 3) {
             doOneCycle();
         }

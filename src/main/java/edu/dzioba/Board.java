@@ -7,10 +7,12 @@ public class Board {
 
     private Map<Coordinates, Sign> fields;
     BoardDimensions dimensions;
+    private final int fieldsCount;
 
     public Board(BoardDimensions dimensions) {
         this.fields = new HashMap<>();
         this.dimensions = dimensions;
+        fieldsCount = dimensions.height * dimensions.width;
     }
 
     public void insertCoordinates(Coordinates coordinates, Sign sign) {
@@ -21,4 +23,15 @@ public class Board {
         return fields.get(cords);
     }
 
+    public Sign getField(int row, int col) {
+        return getField(new Coordinates(row, col));
+    }
+
+    public void insertCoordinates(int row, int col, Sign sign) {
+        insertCoordinates(new Coordinates(row, col), sign);
+    }
+
+    public boolean isDraw() {
+        return fieldsCount == fields.size();
+    }
 }

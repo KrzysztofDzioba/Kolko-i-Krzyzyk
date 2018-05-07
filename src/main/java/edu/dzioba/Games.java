@@ -5,8 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Games {
-    public Game currentGame;
+    Game currentGame;
     List<Game> games;
+    private BoardDimensions boardDimensions;
 
     public Games(List<Game> games) {
         this.games = games;
@@ -21,9 +22,13 @@ public class Games {
         return games.size() == 3;
     }
 
-    public void add(Game game) {
-        games.add(game);
+    public void addNewGame() {
+        Game newGame = new Game(new Board(boardDimensions));
+        games.add(newGame);
+        currentGame = newGame;
     }
 
-
+    public void setBoardDimensions(BoardDimensions boardDimensions) {
+        this.boardDimensions = boardDimensions;
+    }
 }

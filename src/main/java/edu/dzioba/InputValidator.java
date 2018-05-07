@@ -8,6 +8,9 @@ public class InputValidator {
         this.converter = converter;
     }
 
+    public InputValidator() {
+    }
+
     public boolean properBoardSizeInput(String boardSize) {
         try {
             converter.getBoardSize(boardSize);
@@ -20,7 +23,7 @@ public class InputValidator {
     public boolean properWinningNumber(String userInput, BoardDimensions dimensions) {
         Integer value;
         try {
-            value = Integer.valueOf(userInput);
+            value = converter.parseToInteger(userInput);
         } catch (NumberFormatException e) {
             return false;
         }
@@ -28,10 +31,11 @@ public class InputValidator {
     }
 
     public boolean properCoordinatesSchema(String userInput) {
+        String[] coordinatesStr;
         if(userInput == null)
             return false;
-        String[] coordinatesStr = userInput.split(" ");
-        if(coordinatesStr.length == 1)
+        coordinatesStr = converter.splitStringIntoCoordinates(userInput);
+        if(coordinatesStr.length == 1 || coordinatesStr.length == 0)
             return false;
         try {
             Integer.valueOf(coordinatesStr[0]);
@@ -44,10 +48,11 @@ public class InputValidator {
 
     public boolean coordinatesInBoard(BoardDimensions dimensions, Coordinates cords) {
         return cords.getRow() <= dimensions.height && cords.getCol() <= dimensions.width &&
-               (cords.getRow() >= 1 && cords.getCol() >= 1);
+                (cords.getRow() >= 1 && cords.getCol() >= 1);
     }
 
     public boolean coordsAreEmptyInBoard(Board board, Coordinates coords) {
         return board.getField(coords) == null;
     }
+
 }

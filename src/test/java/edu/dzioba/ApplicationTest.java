@@ -12,32 +12,21 @@ import static org.testng.Assert.*;
 public class ApplicationTest {
 
     private GameSessionManager gameSessionManager;
-    private GameSession session;
     private Sign sampleSign = Sign.X;
     private InputValidator validator;
-    private GameState basicRunningState;
     private Players players;
     private BoardDimensions sampleBoardDimensions;
-    private Coordinates sampleCoordinates;
-
-
 
     @BeforeMethod
     private void setUp() {
-//        Sign[][] fields = new Sign[3][3];
         players = new Players(Arrays.asList(new Player("foo", Sign.X), new Player("bar", Sign.O)), Sign.X);
         sampleBoardDimensions = new BoardDimensions(3,3);
-
-        basicRunningState = new RunningState(new Journalist(Language.ENGLISH), new Scanner(System.in)::nextLine,
-                                             players, new Games(Games.initializeGames(sampleBoardDimensions)));
 
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                     new Journalist(Language.ENGLISH),
                                                     new InputConverter(), new InputValidator(new InputConverter()));
 
-        session = new GameSession(gameSessionManager, new RunningState(basicRunningState));
         validator = new InputValidator(new InputConverter());
-        sampleCoordinates = new Coordinates(2,2);
     }
 
     @Test
@@ -54,8 +43,9 @@ public class ApplicationTest {
     public void games_returns_true_if_there_is_end_of_gameSession_because_3_games_were_played() {
         //given
         Games games = new Games(Games.initializeGames(sampleBoardDimensions));
-        games.add(new Game());
-        games.add(new Game());
+        games.setBoardDimensions(sampleBoardDimensions);
+        games.addNewGame();
+        games.addNewGame();
         //when
         boolean gameSessionEnded = games.threeGamesWerePlayed();
         //then
@@ -292,7 +282,7 @@ public class ApplicationTest {
         //when
         boolean wrongSchema = validator.properCoordinatesSchema(userInput);
         //then
-        assertTrue(!wrongSchema);
+        assertFalse(wrongSchema);
     }
 
     @Test
@@ -315,6 +305,17 @@ public class ApplicationTest {
         boolean fieldIsEmpty = validator.coordsAreEmptyInBoard(board, sampleCoords1);
         //then
         assertTrue(!fieldIsEmpty);
+    }
+
+    @Test
+    public void manager_is_able_to_add_given_number_of_points_to_the_player() {
+        //given
+        int wonPoints = 3;
+        Player playerWhoWon = new Player("foo", Sign.X);
+        //when
+        playerWhoWon.addPoints(wonPoints);
+        //then
+        assertEquals(playerWhoWon.getPoints(), 3);
     }
 
 }
