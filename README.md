@@ -1,3 +1,9 @@
+### How to run:
+1. Download project
+2. mvn clean install
+3. java -jar target/xogame-1.1.jar
+4. Enjoy!
+
 ## Estymaty dostarczonych funkcjonalności
 
 |Data  |Pesymistyczna|Realistyczna|Optymistyczna|
