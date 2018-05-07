@@ -239,4 +239,20 @@ public class WinCheckerTest {
         assertFalse(winnerExists);
     }
 
+    @Test
+    public void win_checker_returns_false_if_2_signs_wins_but_0_signs_are_next_to_the_winning_sign() {
+        //given
+        int winningNumber = 2;
+        WinChecker winChecker = new WinChecker(winningNumber, new InputValidator());
+        Board board = new Board(new BoardDimensions(3, 3));
+        board.insertCoordinates(1, 1, Sign.O);
+        board.insertCoordinates(3, 3, Sign.X);
+        board.insertCoordinates(3, 1, Sign.O);
+        Coordinates coords = new Coordinates(3, 1);
+        //when
+        boolean winnerExists = winChecker.isWinner(board, coords);
+        //then
+        assertFalse(winnerExists);
+    }
+
 }
