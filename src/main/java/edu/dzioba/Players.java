@@ -5,6 +5,7 @@ import java.util.List;
 public class Players {
     final List<Player> players;
     Player currentPlayer;
+    private Player gameBeginner;
 
     public Players(List<Player> players, Sign currentPlayer) {
         this.players = players;
@@ -21,9 +22,8 @@ public class Players {
 
     public Player getNextPlayer() {
         for (Player player : players) {
-            if(currentPlayer.equals(player))
-                continue;
-            return player;
+            if(!currentPlayer.equals(player))
+                return player;
         }
         return null;
     }
@@ -39,5 +39,20 @@ public class Players {
 
     public Sign getCurrentsPlayerSign() {
         return currentPlayer.sign;
+    }
+
+    public Player getGameBeginner() {
+        return gameBeginner;
+    }
+
+    public void setNextGameBeginner() {
+        for (Player player : players) {
+            if(gameBeginner == player) // == because in running state there is player's swapping
+                gameBeginner = player;
+        }
+    }
+
+    public void setGameBeginner() {
+        gameBeginner = getNextPlayer(); //
     }
 }

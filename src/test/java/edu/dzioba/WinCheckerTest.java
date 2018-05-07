@@ -229,11 +229,12 @@ public class WinCheckerTest {
         int winningNumber = 3;
         WinChecker winChecker = new WinChecker(winningNumber, new InputValidator());
         Board board = new Board(new BoardDimensions(3, 3));
-        board.insertCoordinates(1, 1, Sign.X);
         board.insertCoordinates(1, 3, Sign.O);
-        Coordinates coords = new Coordinates(2, 2);
+        board.insertCoordinates(2, 2, Sign.O);
+        board.insertCoordinates(2, 3, Sign.O);
+        Coordinates coords = new Coordinates(2, 3);
         //when
-        boolean winnerExists = winChecker.isWinner(Sign.X, board, coords);
+        boolean winnerExists = winChecker.isWinner(board, coords);
         //then
         assertFalse(winnerExists);
     }
