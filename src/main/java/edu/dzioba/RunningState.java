@@ -10,6 +10,10 @@ public class RunningState extends GameState {
     GameState getNextState() {
         players.currentPlayer = players.getNextPlayer();
         Coordinates cords = manager.getCoordinates(players.currentPlayer, getCurrentGame().board.dimensions, getCurrentGame());
+        if(cords == null) {
+            players.currentPlayer = players.getNextPlayer();
+            return new WinState(this);
+        }
         getCurrentGame().board.insertCoordinates(cords, players.getCurrentsPlayerSign());
         if(getCurrentGame().board.isDraw())
             return new DrawState(this);
