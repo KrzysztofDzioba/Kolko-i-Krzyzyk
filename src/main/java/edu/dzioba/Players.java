@@ -45,10 +45,6 @@ public class Players {
         return gameBeginner;
     }
 
-    public void setNextGameBeginner(Player beginner) {
-        gameBeginner = beginner;
-    }
-
     public void setGameBeginner() {
         gameBeginner = currentPlayer;
     }
