@@ -6,7 +6,10 @@
 
     <groupId>edu.dzioba</groupId>
     <artifactId>xogame</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1</version>
+    <name>XO Game</name>
+    <description>Popular XO game, where 2 players need to put given signs in a row on a board.</description>
+    <url>https://github.com/KrzysztofDzioba/Kolko-i-Krzyzyk</url>
 
     <properties>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
