@@ -222,4 +222,19 @@ public class WinCheckerTest {
         assertFalse(winnerExists);
     }
 
+    @Test
+    public void win_checker_returns_false_if_there_is_enough_winnings_signs_but_they_are_not_in_one_line() {
+        //given
+        int winningNumber = 3;
+        WinChecker winChecker = new WinChecker(winningNumber, new InputValidator());
+        Board board = new Board(new BoardDimensions(3, 3));
+        board.insertCoordinates(1, 1, Sign.X);
+        board.insertCoordinates(1, 3, Sign.O);
+        Coordinates coords = new Coordinates(2, 2);
+        //when
+        boolean winnerExists = winChecker.isWinner(Sign.X, board, coords);
+        //then
+        assertFalse(winnerExists);
+    }
+
 }
