@@ -38,7 +38,7 @@ public class WinChecker {
                 Sign fieldChecking = board.getField(row, col);
                 if(fieldChecking == winningSign)
                     signsInARowCounter++;
-                else if(fieldChecking == oppositeSign)
+                else if(fieldChecking == oppositeSign || fieldChecking == null)
                     break;
         }
         return signsInARowCounter;

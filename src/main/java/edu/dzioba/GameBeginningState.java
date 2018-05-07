@@ -16,8 +16,8 @@ public class GameBeginningState extends GameState {
 
         journalist.sayMessage("Creating new board.");
         games.addNewGame();
-        players.setNextGameBeginner();
-        players.currentPlayer = players.getGameBeginner();
+        Player currentGameBeginner  = players.getGameBeginner();
+        players.currentPlayer = players.getOppositePlayer(currentGameBeginner);
         return new RunningState(this);
     }
 }

@@ -45,14 +45,19 @@ public class Players {
         return gameBeginner;
     }
 
-    public void setNextGameBeginner() {
-        for (Player player : players) {
-            if(gameBeginner == player) // == because in running state there is player's swapping
-                gameBeginner = player;
-        }
+    public void setNextGameBeginner(Player beginner) {
+        gameBeginner = beginner;
     }
 
     public void setGameBeginner() {
-        gameBeginner = getNextPlayer(); //
+        gameBeginner = currentPlayer;
+    }
+
+    public Player getOppositePlayer(Player givenPlayer) {
+        for(Player player : players) {
+            if(givenPlayer != player)
+                return player;
+        }
+        return null;
     }
 }
