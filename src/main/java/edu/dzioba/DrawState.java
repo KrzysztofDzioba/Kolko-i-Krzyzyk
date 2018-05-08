@@ -8,9 +8,11 @@ public class DrawState extends GameState {
 
     @Override
     GameState getNextState() {
-        journalist.sayMessage("Draw! All fields are filled, but no winner exists. 1 point is going to both players.");
         players.currentPlayer.addPoints(1);
         players.getNextPlayer().addPoints(1);
+        journalist.sayMessage("Draw! All fields are filled, but no winner exists. 1 point is going to both players.");
+        if(games.threeGamesWerePlayed())
+            return new FinalState(this);
         return new GameBeginningState(this);
     }
 }

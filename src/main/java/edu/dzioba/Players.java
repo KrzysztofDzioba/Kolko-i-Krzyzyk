@@ -56,4 +56,15 @@ public class Players {
         }
         return null;
     }
+
+    public Player getWinner() {
+        Player winner = currentPlayer;
+        for(Player player : players) {
+            if(player.getPoints() > winner.getPoints())
+                winner = player;
+        }
+        if(winner.getPoints() == getOppositePlayer(winner).getPoints())
+            return null; // draw
+        return winner;
+    }
 }
