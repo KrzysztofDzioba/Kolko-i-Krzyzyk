@@ -8,6 +8,7 @@ public class RunningState extends GameState {
 
     @Override
     GameState getNextState() {
+        boardPrinter.printBoard();
         players.currentPlayer = players.getNextPlayer();
         Coordinates cords = manager.getCoordinates(players.currentPlayer, getCurrentGame().board.dimensions, getCurrentGame());
         if(cords == null) {

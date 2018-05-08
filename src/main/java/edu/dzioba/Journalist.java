@@ -19,6 +19,10 @@ public class Journalist {
         return bundle.getString(message.name());
     }
 
+    public void sayMessage(String message) {
+        output.accept(message);
+    }
+
     public String sayMessageWithParameters(Messages message, String... strings) {
         ResourceBundle bundle = ResourceBundle.getBundle("language", language);
         if(strings == null || strings.length == 0) {

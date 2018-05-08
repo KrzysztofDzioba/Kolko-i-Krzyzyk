@@ -12,6 +12,7 @@ public abstract class GameState {
     Players players;
     GameSessionManager manager;
     WinChecker winChecker;
+    BoardPrinter boardPrinter;
 
     GameState(GameState previousState) {
         this.journalist = previousState.journalist;
@@ -20,6 +21,7 @@ public abstract class GameState {
         this.manager = previousState.manager;
         this.games = previousState.games;
         this.winChecker = previousState.winChecker;
+        this.boardPrinter = previousState.boardPrinter;
     }
 
     GameState(GameSessionManager manager) {
