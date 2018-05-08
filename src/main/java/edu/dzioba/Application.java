@@ -7,9 +7,11 @@ public class Application {
     public static void main(String[] args) {
         GameSessionManager manager = new GameSessionManager(
                                      new Scanner(System.in)::nextLine,
-                                     new Journalist(Language.ENGLISH),
-                                     new InputConverter(), new InputValidator(new InputConverter()));
-        GameSession session = new GameSession(manager, new SetUpState(manager));
+                                     args,
+                                     new InputConverter(),
+                                     new InputValidator(new InputConverter()),
+                                     System.out::println);
+        GameSession session = new GameSession(new SetUpState(manager));
         session.start();
     }
 }

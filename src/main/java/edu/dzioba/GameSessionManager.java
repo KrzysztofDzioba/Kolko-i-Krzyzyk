@@ -2,37 +2,49 @@ package edu.dzioba;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class GameSessionManager {
     Supplier<String> userInputProvider;
     private Journalist journalist;
-    private GameSession session;
-    InputConverter converter;
-    InputValidator validator;
+    private InputConverter converter;
+    private InputValidator validator;
 
-    public GameSessionManager(Supplier<String> userInputProvider, Journalist journalist, InputConverter converter, InputValidator validator) {
+    public GameSessionManager(Supplier<String> userInputProvider, String[] programArguments, InputConverter converter,
+                              InputValidator validator, Consumer<String> output) {
         this.userInputProvider = userInputProvider;
-        this.journalist = journalist;
+        this.journalist = createJournalist(programArguments, output);
         this.converter = converter;
         this.validator = validator;
     }
 
-    public Player getWinner() { // TODO
-        return new Player("Foo", Sign.X);
+    private Journalist createJournalist(String[] programArguments, Consumer<String> output) {
+        if(programArguments.length == 0)
+            return new Journalist(Locale.ENGLISH, output);
+        Language lang;
+        try {
+            lang = Language.valueOf(programArguments[0]);
+        } catch (IllegalArgumentException e) {
+            Journalist journalist = new Journalist(Locale.ENGLISH, output);
+            journalist.sayMessage(Messages.wrong_configurable_variable);
+            return journalist;
+        }
+        return new Journalist(lang.getLocale(), output);
     }
 
     public Players setUpPlayers() {
         List<Player> players = new ArrayList<>();
         players.add(setUpPlayer(Sign.X));
-        journalist.sayMessage("Player added");
+        journalist.sayMessage(Messages.player_added);
         players.add(setUpPlayer(Sign.O));
-        journalist.sayMessage("Player added");
+        journalist.sayMessage(Messages.player_added);
         return new Players(players, null);
     }
 
     private Player setUpPlayer(Sign sign) {
-        journalist.sayMessage("Hello player " + sign.name() + ". Please tell me what is your name: ");
+        journalist.sayMessageWithParameters(Messages.get_player_name, sign.name());
         String playerName = userInputProvider.get();
         return new Player(playerName, sign);
     }
@@ -44,7 +56,7 @@ public class GameSessionManager {
     public Sign askWhoShouldBegin() {
         String userInput;
         do {
-            journalist.sayMessage("Who should begin? (X or O)");
+            journalist.sayMessage(Messages.who_should_begin);
             userInput = userInputProvider.get();
         } while (!userInput.equalsIgnoreCase("O") && !userInput.equalsIgnoreCase("X"));
         return Sign.valueOf(userInput.toUpperCase());
@@ -57,7 +69,7 @@ public class GameSessionManager {
     }
 
     public BoardDimensions getBoardsDimensions(InputValidator validator) {
-        journalist.sayMessage("Please tell me how the board should look like? Type: X,Y (where X is width and Y is height)");
+        journalist.sayMessage(Messages.board_dimensions);
         String userInput = userInputProvider.get();
         boolean wrongUserInput = true;
         while(wrongUserInput) {
@@ -65,7 +77,7 @@ public class GameSessionManager {
                 return converter.getBoardSize(userInput);
             }
             else {
-                journalist.sayMessage("Please provide proper dimensions (example: 4,5)");
+                journalist.sayMessage(Messages.proper_dimensions);
                 userInput = userInputProvider.get();
             }
         }
@@ -73,7 +85,7 @@ public class GameSessionManager {
     }
 
     public Integer getWinningNumber(InputValidator validator, BoardDimensions boardsDimensions) {
-        journalist.sayMessage("Please tell me how many signs in a row wins?");
+        journalist.sayMessage(Messages.provide_winning_signs);
         String userInput = userInputProvider.get();
         boolean wrongUserInput = true;
         while(wrongUserInput) {
@@ -81,8 +93,7 @@ public class GameSessionManager {
                 return Integer.valueOf(userInput);
             }
             else {
-                journalist.sayMessage("Please provide proper number (example: 3). " +
-                        "Number of winning number can't be larger than board dimensions or less than 1.");
+                journalist.sayMessage(Messages.provide_proper_winning_signs);
                 userInput = userInputProvider.get();
             }
         }
@@ -90,7 +101,7 @@ public class GameSessionManager {
     }
 
     Coordinates getCoordinates(Player currentPlayer, BoardDimensions dimensions, Game currentGame) {
-        journalist.sayMessageWithParameters("Player %s. Please make your move.", currentPlayer.toString());
+        journalist.sayMessageWithParameters(Messages.player_make_move, currentPlayer.toString());
         String userInput = userInputProvider.get();
         boolean wrongUserInput = true;
         while(wrongUserInput) {
@@ -104,12 +115,12 @@ public class GameSessionManager {
                 if(coordsInBoard && coordsEmpty)
                     return converter.getCoordinates(userInput);
                 else {
-                    journalist.sayMessage("Given field is not in board or isn't empty anymore");
+                    journalist.sayMessage(Messages.wrong_field);
                     userInput = userInputProvider.get();
                 }
             }
             else {
-                journalist.sayMessage("You provided coordinates in a bad way. Do it like this: 2 3");
+                journalist.sayMessage(Messages.bad_way_coordinates);
                 userInput = userInputProvider.get();
             }
         }

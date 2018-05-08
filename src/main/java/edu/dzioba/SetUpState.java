@@ -25,7 +25,7 @@ public class SetUpState extends GameState {
         getCurrentGame().board = new Board(dimensions);
         int winningNumber = manager.getWinningNumber(new InputValidator(new InputConverter()), dimensions);
         this.winChecker = new WinChecker(winningNumber, new InputValidator());
-        journalist.sayMessage("Remember: player can always give up by pressing 'q' during his move.");
+        journalist.sayMessage(Messages.give_up);
     }
 
 
@@ -39,7 +39,7 @@ public class SetUpState extends GameState {
         int winningNumber = 3;
         this.winChecker = new WinChecker(winningNumber, new InputValidator());
         System.out.println("Test set up finished. \n");
-        journalist.sayMessage("Remember: player can always give up by pressing 'q' during his move. \n");
+        journalist.sayMessage(Messages.give_up);
     }
 
 }
