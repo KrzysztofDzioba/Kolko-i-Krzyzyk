@@ -318,4 +318,35 @@ public class ApplicationTest {
         assertEquals(playerWhoWon.getPoints(), 3);
     }
 
+    @Test
+    public void get_winner_method_returns_player_with_more_points() {
+        //given
+        Player player1 = new Player("foo", Sign.X);
+        Player player2 = new Player("bar", Sign.O);
+        Players players = new Players(Arrays.asList(player1, player2), Sign.X);
+
+        player1.addPoints(3);
+        player1.addPoints(3);
+        player2.addPoints(3);
+        //when
+        Player winner = players.getWinner();
+        //then
+        assertEquals(winner, player1);
+    }
+
+    @Test
+    public void get_winner_method_returns_null_if_both_players_have_same_amount_of_points() {
+        //given
+        Player player1 = new Player("foo", Sign.X);
+        Player player2 = new Player("bar", Sign.O);
+        Players players = new Players(Arrays.asList(player1, player2), Sign.X);
+
+        player1.addPoints(3);
+        player2.addPoints(3);
+        //when
+        Player winner = players.getWinner();
+        //then
+        assertNull(winner);
+    }
+
 }
