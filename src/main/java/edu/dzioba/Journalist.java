@@ -1,28 +1,32 @@
 package edu.dzioba;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.function.Consumer;
+
 public class Journalist {
-    private final Language language;
+    private Locale language;
+    private Consumer<String> output;
 
-    public Journalist(Language language) {
+    public Journalist(Locale language, Consumer<String> output) {
         this.language = language;
+        this.output = output;
     }
 
-    public Language getLanguage() {
-        return language;
+    public String sayMessage(Messages message) {
+        ResourceBundle bundle = ResourceBundle.getBundle("language", language);
+        output.accept(bundle.getString(message.name()));
+        return bundle.getString(message.name());
     }
 
-    public String sayMessage(String messsage) {
-        System.out.println(messsage);
-        return messsage;
-    }
-
-    public String sayMessageWithParameters(String message, String... strings) {
+    public String sayMessageWithParameters(Messages message, String... strings) {
+        ResourceBundle bundle = ResourceBundle.getBundle("language", language);
         if(strings == null || strings.length == 0) {
-            System.out.println(String.format(message, ""));
-            return String.format(message, "");
+            output.accept(String.format(bundle.getString(message.name()), ""));
+            return String.format(bundle.getString(message.name()), "");
         }
-        String outputMessage = String.format(message, strings);
-        System.out.println(outputMessage);
+        String outputMessage = String.format(bundle.getString(message.name()), strings);
+        output.accept(outputMessage);
         return outputMessage;
     }
 

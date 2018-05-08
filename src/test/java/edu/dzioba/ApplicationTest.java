@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Scanner;
 
 import static org.testng.Assert.*;
@@ -16,28 +17,21 @@ public class ApplicationTest {
     private InputValidator validator;
     private Players players;
     private BoardDimensions sampleBoardDimensions;
+    private Journalist sampleJournalist;
 
     @BeforeMethod
     private void setUp() {
         players = new Players(Arrays.asList(new Player("foo", Sign.X), new Player("bar", Sign.O)), Sign.X);
         sampleBoardDimensions = new BoardDimensions(3,3);
+        sampleJournalist = new Journalist(Locale.ENGLISH, System.out::println);
 
         gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
-                                                    new Journalist(Language.ENGLISH),
-                                                    new InputConverter(), new InputValidator(new InputConverter()));
+                             new String[]{},
+                             new InputConverter(), new InputValidator(new InputConverter()),
+                             System.out::println);
 
         validator = new InputValidator(new InputConverter());
     }
-
-    @Test
-    public void gameSessionManager_returns_player_object_on_get_winner_method() {
-        //given
-        //when
-        Player winner = gameSessionManager.getWinner();
-        //then
-        assertNotNull(winner);
-    }
-
 
     @Test
     public void games_returns_true_if_there_is_end_of_gameSession_because_3_games_were_played() {
@@ -75,21 +69,12 @@ public class ApplicationTest {
     }
 
     @Test
-    public void it_is_possible_to_set_up_journalists_language() {
-        //given
-        Journalist journalist;
-        //when
-        journalist = new Journalist(Language.ENGLISH);
-        //then
-        assertEquals(journalist.getLanguage(), Language.ENGLISH);
-    }
-
-    @Test
     public void game_session_manager_has_its_own_journalist() {
         //given
         GameSessionManager manager = new GameSessionManager(new Scanner(System.in)::nextLine,
-                                                            new Journalist(Language.ENGLISH),
-                                                            new InputConverter(), new InputValidator(new InputConverter()));
+                                                            new String[]{},
+                                                            new InputConverter(), new InputValidator(new InputConverter()),
+                                                            System.out::println);
         //when
         Journalist journalist = manager.getJournalist();
         //then
@@ -177,11 +162,10 @@ public class ApplicationTest {
     @Test
     public void journalist_says_proper_message_if_arguments_are_provided() {
         //given
-        Journalist journalist = new Journalist(Language.ENGLISH);
+        Journalist journalist = sampleJournalist;
         String parameter = "Foo";
-        String message = "This is my name: %s";
         //when
-        String output = journalist.sayMessageWithParameters(message, parameter);
+        String output = journalist.sayMessageWithParameters(Messages.test_message, parameter);
         //then
         assertEquals(output, "This is my name: Foo");
     }
@@ -189,11 +173,9 @@ public class ApplicationTest {
     @Test
     public void journalist_says_proper_message_if_arguments_are_not_provided_to_say_message_with_parameters_method() {
         //given
-        Journalist journalist = new Journalist(Language.ENGLISH);
-        String parameter = "Foo";
-        String message = "This is my name: %s";
+        Journalist journalist = sampleJournalist;
         //when
-        String output = journalist.sayMessageWithParameters(message, null);
+        String output = journalist.sayMessageWithParameters(Messages.test_message, null);
         //then
         assertEquals(output, "This is my name: ");
     }

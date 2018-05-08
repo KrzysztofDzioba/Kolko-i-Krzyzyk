@@ -1,5 +1,20 @@
 package edu.dzioba;
 
+import java.util.Locale;
+
 public enum Language {
-    ENGLISH;
+    en{
+        @Override
+        Locale getLocale() {
+            return Locale.ENGLISH;
+        }
+    },
+    pl{
+        @Override
+        Locale getLocale() {
+            return new Locale("pl", "PL");
+        }
+    };
+
+    abstract Locale getLocale();
 }

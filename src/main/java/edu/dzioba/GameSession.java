@@ -1,11 +1,9 @@
 package edu.dzioba;
 
 public class GameSession {
-    private GameSessionManager manager;
     private GameState currentState;
 
-    public GameSession (GameSessionManager manager, GameState state) {
-        this.manager = manager;
+    public GameSession (GameState state) {
         this.currentState = state;
     }
 
