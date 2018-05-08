@@ -45,10 +45,6 @@ public class Players {
         return gameBeginner;
     }
 
-    public void setNextGameBeginner(Player beginner) {
-        gameBeginner = beginner;
-    }
-
     public void setGameBeginner() {
         gameBeginner = currentPlayer;
     }
@@ -59,5 +55,16 @@ public class Players {
                 return player;
         }
         return null;
+    }
+
+    public Player getWinner() {
+        Player winner = currentPlayer;
+        for(Player player : players) {
+            if(player.getPoints() > winner.getPoints())
+                winner = player;
+        }
+        if(winner.getPoints() == getOppositePlayer(winner).getPoints())
+            return null; // draw
+        return winner;
     }
 }

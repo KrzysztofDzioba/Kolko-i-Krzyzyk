@@ -15,12 +15,10 @@ public class RunningState extends GameState {
             return new WinState(this);
         }
         getCurrentGame().board.insertCoordinates(cords, players.getCurrentsPlayerSign());
-        if(getCurrentGame().board.isDraw())
-            return new DrawState(this);
-        else if(isWinnerInGame(cords))
+        if(isWinnerInGame(cords))
             return new WinState(this);
+        else if(getCurrentGame().board.isDraw())
+            return new DrawState(this);
         return new RunningState(this);
     }
-
-
 }

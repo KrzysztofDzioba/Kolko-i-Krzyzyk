@@ -14,10 +14,10 @@ public class GameBeginningState extends GameState {
                                                     players.getNextPlayer().toString(),
                                                     String.valueOf(players.getNextPlayer().getPoints()));
 
-        journalist.sayMessage("Creating new board.");
+        journalist.sayMessage("\n Creating new board.");
         games.addNewGame();
-        Player currentGameBeginner  = players.getGameBeginner();
-        players.currentPlayer = players.getOppositePlayer(currentGameBeginner);
+        players.currentPlayer = players.getOppositePlayer(players.getGameBeginner());
+        players.setGameBeginner();
         return new RunningState(this);
     }
 }

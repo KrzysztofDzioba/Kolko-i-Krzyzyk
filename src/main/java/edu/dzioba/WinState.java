@@ -8,13 +8,12 @@ public class WinState extends GameState {
 
     @Override
     GameState getNextState() {
+        players.currentPlayer.addPoints(3);
+        if(games.threeGamesWerePlayed())
+            return new FinalState(this);
         journalist.sayMessageWithParameters("Congratulations player %s! You won this game." +
                                                     " 3 points are going to your account.",
                                                     players.currentPlayer.toString());
-        players.currentPlayer.addPoints(3);
-
-
-
         return new GameBeginningState(this);
     }
 }

@@ -4,8 +4,12 @@ public class InputConverter {
 
     public BoardDimensions getBoardSize(String userInput) throws NumberFormatException {
         String[] values = userInput.split(",");
+        if(values.length == 1 || values.length == 0)
+            throw new NumberFormatException();
         int width = Integer.valueOf(values[0]);
         int height = Integer.valueOf(values[1]);
+        if(width < 1 || height < 1)
+            throw new ValueZeroOrLessException();
         return new BoardDimensions(width, height);
     }
 

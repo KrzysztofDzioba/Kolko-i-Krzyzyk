@@ -27,7 +27,7 @@ public class InputValidator {
         } catch (NumberFormatException e) {
             return false;
         }
-        return !(value > Math.max(dimensions.width, dimensions.height));
+        return !(value > Math.max(dimensions.width, dimensions.height)) && value > 0;
     }
 
     public boolean properCoordinatesSchema(String userInput) {

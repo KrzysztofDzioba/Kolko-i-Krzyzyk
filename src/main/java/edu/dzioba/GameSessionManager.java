@@ -32,7 +32,7 @@ public class GameSessionManager {
     }
 
     private Player setUpPlayer(Sign sign) {
-        journalist.sayMessage("Hello player " + sign.name() + ". Please say me what is your name: ");
+        journalist.sayMessage("Hello player " + sign.name() + ". Please tell me what is your name: ");
         String playerName = userInputProvider.get();
         return new Player(playerName, sign);
     }
@@ -46,8 +46,8 @@ public class GameSessionManager {
         do {
             journalist.sayMessage("Who should begin? (X or O)");
             userInput = userInputProvider.get();
-        } while (!userInput.equals("O") && !userInput.equals("X"));
-        return Sign.valueOf(userInput);
+        } while (!userInput.equalsIgnoreCase("O") && !userInput.equalsIgnoreCase("X"));
+        return Sign.valueOf(userInput.toUpperCase());
     }
 
     public Player getFirstPlayer(Players players) {
@@ -82,7 +82,7 @@ public class GameSessionManager {
             }
             else {
                 journalist.sayMessage("Please provide proper number (example: 3). " +
-                        "Number of winning number can't be larger than board dimensions");
+                        "Number of winning number can't be larger than board dimensions or less than 1.");
                 userInput = userInputProvider.get();
             }
         }

@@ -11,9 +11,9 @@
 |25.04| 1 - 3 | 1 - 4 | 1-5 
 |26.04| 4 - 7 | 5 - 8 | 6 - 9
 |27.04| 8 - 11 | 9 - 14 | 10 - 16
-|30.04| 12 - 16 | 15 - 19 | 17 - 21
-|01.05| 17 - 20 | 19 - 21 | X
-|02.05| 21 | X | X
+|30.04| 12 - 16 | 15 - 19 | 17 - 20
+|01.05| 17 - 19 | 20  | X
+|02.05| 20 | X | X
 
 #### Lista funkcjonalności:
 1. Nadanie graczom imion na początku gry
@@ -32,9 +32,8 @@
 14. Po zremisowaniu gry, gracze dostają po 1 punkcie
 15. Gracz potrafi się poddać w trakcie swojego ruchu
 16. Pytanie o to kto zaczyna, jest tylko raz. Potem kolejność jest na przemian
-17. Gdy gracz wygrał 2x z rzędu, nastęþuje koniec sesji
-18. Rozgrywka kończy się po 3 rundach
-19. Po zakończeniu sesji, wyświetlany jest napis kto wygrał lub że jest remis
-20. Wiadomośći są pokazywane w odpowiednim języku
-21. Drukowanie odpowiedniego widoku planszy
+17. Rozgrywka kończy się po 3 rundach
+18. Po zakończeniu sesji, wyświetlany jest napis kto wygrał lub że jest remis
+19. Wiadomośći są pokazywane w odpowiednim języku
+20. Drukowanie odpowiedniego widoku planszy
 
