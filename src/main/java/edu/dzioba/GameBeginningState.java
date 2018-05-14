@@ -18,6 +18,7 @@ public class GameBeginningState extends GameState {
         games.addNewGame();
         players.currentPlayer = players.getOppositePlayer(players.getGameBeginner());
         players.setGameBeginner();
+        boardPrinter = new BoardPrinter(getCurrentGame().board, journalist);
         return new RunningState(this);
     }
 }
