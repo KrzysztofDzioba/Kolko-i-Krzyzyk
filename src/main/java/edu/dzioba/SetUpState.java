@@ -33,7 +33,7 @@ public class SetUpState extends GameState {
     private void setDefaultsForTests() {
         players = new Players(Arrays.asList(new Player("foo", Sign.X), new Player("bar", Sign.O)), Sign.X);
         players.setGameBeginner();
-        BoardDimensions dimensions = new BoardDimensions(3,3);
+        BoardDimensions dimensions = new BoardDimensions(5,10);
         games = new Games(Games.initializeGames(dimensions));
         games.setBoardDimensions(dimensions);
         getCurrentGame().board = new Board(dimensions);
