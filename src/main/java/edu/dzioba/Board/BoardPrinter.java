@@ -1,4 +1,7 @@
-package edu.dzioba;
+package edu.dzioba.Board;
+
+import edu.dzioba.Messaging.Journalist;
+import edu.dzioba.Players.Sign;
 
 public class BoardPrinter {
     private Board board;
@@ -10,12 +13,11 @@ public class BoardPrinter {
     }
 
     public String printBoard() {
-        int boardWidth = this.board.dimensions.width;
-        int boardHeight = this.board.dimensions.height;
+        BoardDimensions dimensions = board.getDimensions();
         StringBuilder boardToPrint = new StringBuilder();
 
-        StringBuilder highestRow = getPrintedHighestRow(boardWidth);
-        StringBuilder restOfTheBoard = getPrintedRows(boardWidth, boardHeight);
+        StringBuilder highestRow = getPrintedHighestRow(dimensions.width);
+        StringBuilder restOfTheBoard = getPrintedRows(dimensions);
 
         boardToPrint.append(highestRow.toString());
         boardToPrint.append(restOfTheBoard.toString());
@@ -25,11 +27,11 @@ public class BoardPrinter {
         return boardStr;
     }
 
-    private StringBuilder getPrintedRows(int boardWidth, int boardHeight) {
+    private StringBuilder getPrintedRows(BoardDimensions dimensions) {
         StringBuilder middleBoard = new StringBuilder();
-        for(int row = 1; row <= boardHeight; row++) {
+        for(int row = 1; row <= dimensions.height; row++) {
             middleBoard.append(rowNumber(row));
-            for(int col = 1; col <= boardWidth; col++) {
+            for(int col = 1; col <= dimensions.width; col++) {
                 Sign currentField = board.getField(row, col);
                 middleBoard.append(currentField(currentField));
             }
@@ -48,7 +50,7 @@ public class BoardPrinter {
     }
 
     private String rowNumber(int currentRowNum){
-        int boardHeight = board.dimensions.height;
+        int boardHeight = board.getDimensions().height;
         int rowDigitNumber = String.valueOf(boardHeight).length();
         int currentRowDigitNumber = String.valueOf(currentRowNum).length();
         int currentSpaces = rowDigitNumber - currentRowDigitNumber;
@@ -63,7 +65,7 @@ public class BoardPrinter {
     }
 
     private String colNumber(int currentColNum){
-        int boardWidth = board.dimensions.width;
+        int boardWidth = board.getDimensions().width;
         int colDigitNumber = String.valueOf(boardWidth).length();
         int currentColDigitNumber = String.valueOf(currentColNum).length();
         int currentSpaces = colDigitNumber - currentColDigitNumber;
@@ -78,30 +80,16 @@ public class BoardPrinter {
     }
 
     private String currentField(Sign sign) {
-        int boardWidth = board.dimensions.width;
+        int boardWidth = board.getDimensions().width;
         int colDigitNumber = String.valueOf(boardWidth).length();
 
         StringBuilder builder = new StringBuilder();
-
         builder.append(" ");
-        if(sign == null){
-            builder.append(" ");//empty sign, because sign is null
-            for(int i = 0; i < colDigitNumber; i++)
-                builder.append(" ");
-            builder.append("|");
-        }
-        else if (sign.name().equals("O")) {
-            builder.append(sign.name());
-            for(int i = 0; i < colDigitNumber; i++)
-                builder.append(" ");
-            builder.append("|");
-        }
-        else {
-            builder.append(sign.name());
-            for(int i = 0; i < colDigitNumber; i++)
-                builder.append(" ");
-            builder.append("|");
-        }
+        builder.append(sign == null ? " " : sign.name());
+        for(int i = 0; i < colDigitNumber; i++)
+            builder.append(" ");
+        builder.append("|");
+
         return builder.toString();
     }
 

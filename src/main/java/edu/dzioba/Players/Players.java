@@ -1,10 +1,10 @@
-package edu.dzioba;
+package edu.dzioba.Players;
 
 import java.util.List;
 
 public class Players {
-    final List<Player> players;
-    Player currentPlayer;
+    final private List<Player> players;
+    private Player currentPlayer;
     private Player gameBeginner;
 
     public Players(List<Player> players, Sign currentPlayer) {
@@ -12,9 +12,9 @@ public class Players {
         this.currentPlayer = getPlayer(currentPlayer);
     }
 
-    Player getPlayer(Sign sign) {
+    public Player getPlayer(Sign sign) {
         for (Player player : players) {
-            if(player.sign.equals(sign))
+            if(player.getSign().equals(sign))
                 return player;
         }
         return null;
@@ -38,7 +38,7 @@ public class Players {
     }
 
     public Sign getCurrentsPlayerSign() {
-        return currentPlayer.sign;
+        return currentPlayer.getSign();
     }
 
     public Player getGameBeginner() {
@@ -47,6 +47,14 @@ public class Players {
 
     public void setGameBeginner() {
         gameBeginner = currentPlayer;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public Player getOppositePlayer(Player givenPlayer) {
@@ -66,5 +74,9 @@ public class Players {
         if(winner.getPoints() == getOppositePlayer(winner).getPoints())
             return null; // draw
         return winner;
+    }
+
+    public void swapCurrentPlayer() {
+        this.currentPlayer = getNextPlayer();
     }
 }

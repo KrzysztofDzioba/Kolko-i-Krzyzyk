@@ -1,4 +1,9 @@
-package edu.dzioba;
+package edu.dzioba.Game;
+
+import edu.dzioba.Board.Board;
+import edu.dzioba.Board.Coordinates;
+import edu.dzioba.UserInputHandling.InputValidator;
+import edu.dzioba.Players.Sign;
 
 public class WinChecker {
 
@@ -33,7 +38,7 @@ public class WinChecker {
         Sign winningSign = board.getField(winningCoords);
         int coordsRow = winningCoords.getRow();
         int coordsCol = winningCoords.getCol();
-        Sign oppositeSign = Sign.getOppositeSign(winningSign);
+        Sign oppositeSign = winningSign.getOppositeSign();
         for(int row = coordsRow + rowIncreaser, col = coordsCol + colIncreaser; coordsInBoard(board, row, col); row += rowIncreaser, col += colIncreaser) {
                 Sign fieldChecking = board.getField(row, col);
                 if(fieldChecking == winningSign)
@@ -45,7 +50,7 @@ public class WinChecker {
     }
 
     private boolean coordsInBoard(Board board, int row, int col) {
-        return validator.coordinatesInBoard(board.dimensions, new Coordinates(row, col));
+        return validator.coordinatesInBoard(board.getDimensions(), new Coordinates(row, col));
     }
 
 }

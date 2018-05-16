@@ -1,4 +1,8 @@
-package edu.dzioba;
+package edu.dzioba.States;
+
+import edu.dzioba.Messaging.Messages;
+import edu.dzioba.Players.Player;
+import edu.dzioba.Players.Sign;
 
 public class FinalState extends GameState {
 
@@ -8,7 +12,7 @@ public class FinalState extends GameState {
     }
 
     @Override
-    GameState getNextState() {
+    public GameState getNextState() {
         Player playerX = players.getPlayer(Sign.X);
         Player playerY = players.getPlayer(Sign.O);
         journalist.sayMessage(Messages.end_of_game);

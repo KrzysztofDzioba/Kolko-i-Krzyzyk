@@ -1,5 +1,18 @@
 package edu.dzioba;
 
+import edu.dzioba.Board.Board;
+import edu.dzioba.Board.BoardDimensions;
+import edu.dzioba.Board.BoardPrinter;
+import edu.dzioba.Board.Coordinates;
+import edu.dzioba.Game.GameSessionManager;
+import edu.dzioba.Game.Games;
+import edu.dzioba.Messaging.Journalist;
+import edu.dzioba.Messaging.Messages;
+import edu.dzioba.Players.Player;
+import edu.dzioba.Players.Players;
+import edu.dzioba.Players.Sign;
+import edu.dzioba.UserInputHandling.InputConverter;
+import edu.dzioba.UserInputHandling.InputValidator;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -12,7 +25,6 @@ import static org.testng.Assert.*;
 
 public class ApplicationTest {
 
-    private GameSessionManager gameSessionManager;
     private Sign sampleSign = Sign.X;
     private InputValidator validator;
     private Players players;
@@ -24,13 +36,7 @@ public class ApplicationTest {
         players = new Players(Arrays.asList(new Player("foo", Sign.X), new Player("bar", Sign.O)), Sign.X);
         sampleBoardDimensions = new BoardDimensions(3,3);
         sampleJournalist = new Journalist(Locale.ENGLISH, System.out::println);
-
-        gameSessionManager = new GameSessionManager(new Scanner(System.in)::nextLine,
-                             new String[]{},
-                             new InputConverter(), new InputValidator(new InputConverter()),
-                             System.out::println);
-
-        validator = new InputValidator(new InputConverter());
+        validator = new InputValidator();
     }
 
     @Test
@@ -73,7 +79,7 @@ public class ApplicationTest {
         //given
         GameSessionManager manager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                             new String[]{},
-                                                            new InputConverter(), new InputValidator(new InputConverter()),
+                                                            new InputConverter(), new InputValidator(),
                                                             System.out::println);
         //when
         Journalist journalist = manager.getJournalist();
@@ -89,7 +95,7 @@ public class ApplicationTest {
         //when
         Players players = new Players(Arrays.asList(player1, player2), Sign.X);
         //then
-        assertSame(players.currentPlayer, player1);
+        assertSame(players.getCurrentPlayer(), player1);
     }
 
     @Test
@@ -101,7 +107,7 @@ public class ApplicationTest {
         //when
         Board board = new Board(dimensions);
         //then
-        assertEquals(board.dimensions.width, exampleWidth);
+        assertEquals(board.getDimensions().width, exampleWidth);
     }
 
     @Test
@@ -112,7 +118,7 @@ public class ApplicationTest {
         //when
         Board board = new Board(new BoardDimensions(exampleWidth, exampleHeight));
         //then
-        assertEquals(board.dimensions.height, exampleHeight);
+        assertEquals(board.getDimensions().height, exampleHeight);
     }
 
     @Test
@@ -156,7 +162,7 @@ public class ApplicationTest {
         //when
         players.setCurrentPlayer(Sign.X);
         //then
-        assertEquals(players.currentPlayer, player1);
+        assertEquals(players.getCurrentPlayer(), player1);
     }
 
     @Test
@@ -183,7 +189,7 @@ public class ApplicationTest {
     @Test
     public void input_validator_returns_true_if_provided_user_coordinates_are_correct() {
         //given
-        InputValidator validator = new InputValidator(new InputConverter());
+        InputValidator validator = new InputValidator();
         String userInput = "1 1";
         //when
         boolean validCoordinates = validator.properCoordinatesSchema(userInput);
@@ -194,7 +200,7 @@ public class ApplicationTest {
     @Test
     public void input_validator_returns_false_if_provided_user_coordinates_are_correct() {
         //given
-        InputValidator validator = new InputValidator(new InputConverter());
+        InputValidator validator = new InputValidator();
         String userInput = "ac2";
         //when
         boolean validCoordinates = validator.properCoordinatesSchema(userInput);
@@ -392,7 +398,7 @@ public class ApplicationTest {
         //when
         GameSessionManager manager = new GameSessionManager(new Scanner(System.in)::nextLine,
                                                             programArguments,
-                                                            new InputConverter(), new InputValidator(new InputConverter()),
+                                                            new InputConverter(), new InputValidator(),
                                                             System.out::println);
         Journalist journalist = manager.getJournalist();
         //then
@@ -424,7 +430,7 @@ public class ApplicationTest {
     public void InputValidator_properWinningNumberMethod_returns_false_if_user_provided_not_convertible_Integer() {
         //given
         String userInputWinningNumber = "xyz";
-        InputValidator validator = new InputValidator(new InputConverter());
+        InputValidator validator = new InputValidator();
         //when
         boolean properIntFormat = validator.properWinningNumber(userInputWinningNumber, sampleBoardDimensions);
         //then
@@ -435,7 +441,7 @@ public class ApplicationTest {
     public void InputValidator_properWinningNumberMethod_returns_false_if_user_provided_to_big_Integer() {
         //given
         String userInputWinningNumber = "10";
-        InputValidator validator = new InputValidator(new InputConverter());
+        InputValidator validator = new InputValidator();
         int maxWidth = 5;
         int maxHeight = 5;
         BoardDimensions dimensions = new BoardDimensions(maxWidth, maxHeight);
@@ -449,7 +455,7 @@ public class ApplicationTest {
     public void InputValidator_properCoordinatesSchemaMethod_returns_false_if_cannot_parse_user_input_to_coordinates() {
         //given
         String userInputCoords = "1 b";
-        InputValidator validator = new InputValidator(new InputConverter());
+        InputValidator validator = new InputValidator();
         //when
         boolean properCoords = validator.properCoordinatesSchema(userInputCoords);
         //then

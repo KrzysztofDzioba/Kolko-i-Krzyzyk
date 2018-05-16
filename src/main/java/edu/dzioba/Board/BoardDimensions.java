@@ -1,8 +1,8 @@
-package edu.dzioba;
+package edu.dzioba.Board;
 
 public class BoardDimensions {
-    int width;
-    int height;
+    public int width;
+    public int height;
 
     public BoardDimensions(int width, int height) {
         this.width = width;

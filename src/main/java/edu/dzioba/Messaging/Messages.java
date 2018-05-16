@@ -1,4 +1,4 @@
-package edu.dzioba;
+package edu.dzioba.Messaging;
 
 public enum Messages {
 

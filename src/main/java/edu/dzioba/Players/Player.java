@@ -1,11 +1,11 @@
-package edu.dzioba;
+package edu.dzioba.Players;
 
 public class Player {
     private String name;
-    Sign sign;
+    private final Sign sign;
     private int points;
 
-    Player(String name, Sign x) {
+    public Player(String name, Sign x) {
         this.name = name;
         this.sign = x;
         this.points = 0;
@@ -30,5 +30,9 @@ public class Player {
 
     public int getPoints() {
         return points;
+    }
+
+    public Sign getSign() {
+        return sign;
     }
 }

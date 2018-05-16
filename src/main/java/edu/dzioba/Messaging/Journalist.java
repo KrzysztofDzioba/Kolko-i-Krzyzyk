@@ -1,4 +1,4 @@
-package edu.dzioba;
+package edu.dzioba.Messaging;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

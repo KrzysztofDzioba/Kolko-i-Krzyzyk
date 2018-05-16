@@ -1,4 +1,13 @@
-package edu.dzioba;
+package edu.dzioba.States;
+
+import edu.dzioba.Board.BoardPrinter;
+import edu.dzioba.Board.Coordinates;
+import edu.dzioba.Game.Game;
+import edu.dzioba.Game.GameSessionManager;
+import edu.dzioba.Game.Games;
+import edu.dzioba.Game.WinChecker;
+import edu.dzioba.Messaging.Journalist;
+import edu.dzioba.Players.Players;
 
 import java.util.function.Supplier;
 
@@ -26,17 +35,17 @@ public abstract class GameState {
 
     GameState(GameSessionManager manager) {
         this.journalist = manager.getJournalist();
-        this.input = manager.userInputProvider;
+        this.input = manager.getUserInputProvider();
         this.manager = manager;
     }
 
     Game getCurrentGame() {
-        return games.currentGame;
+        return games.getCurrentGame();
     }
 
     boolean isWinnerInGame(Coordinates coords) {
-        return winChecker.isWinner(games.currentGame.board, coords);
+        return winChecker.isWinner(games.getCurrentGame().getBoard(), coords);
     }
 
-    abstract GameState getNextState();
+    public abstract GameState getNextState();
 }
