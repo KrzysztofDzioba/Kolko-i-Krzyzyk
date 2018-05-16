@@ -331,4 +331,129 @@ public class ApplicationTest {
         assertNull(winner);
     }
 
+    @Test
+    public void board_is_draw_returns_true_if_there_is_a_draw_in_current_game() {
+        //given
+        Board board = new Board(new BoardDimensions(2, 2));
+        board.insertCoordinates(1, 1, Sign.X);
+        board.insertCoordinates(1, 2, Sign.X);
+        board.insertCoordinates(2, 1, Sign.O);
+        board.insertCoordinates(2, 2, Sign.O);
+        //when
+        boolean isDraw = board.isDraw();
+        //then
+        assertTrue(isDraw);
+    }
+
+    @Test
+    public void board_is_draw_returns_false_if_there_is_a_draw_in_current_game() {
+        //given
+        Board board = new Board(new BoardDimensions(2, 2));
+        board.insertCoordinates(1, 1, Sign.X);
+        board.insertCoordinates(1, 2, Sign.X);
+        board.insertCoordinates(2, 1, Sign.O);
+        //when
+        boolean isDraw = board.isDraw();
+        //then
+        assertFalse(isDraw);
+    }
+
+    @Test
+    public void board_printer_prints_board_with_proper_amount_of_X_signs() {
+        //given
+        Board board = new Board(new BoardDimensions(5, 10));
+        board.insertCoordinates(1, 1, Sign.X);
+        board.insertCoordinates(2, 1, Sign.X);
+        board.insertCoordinates(3, 3, Sign.O);
+        BoardPrinter boardPrinter = new BoardPrinter(board, sampleJournalist);
+        //when
+        String boardStr = boardPrinter.printBoard();
+        //then
+        long xSignsInBoard = boardStr.chars().filter(myChar -> myChar =='X').count();
+        assertEquals(xSignsInBoard, 2);
+    }
+
+    @Test
+    public void test_coordinates_equals_returns_false_if_object_is_not_type_of_coordinates() {
+        //given
+        Coordinates coords = new Coordinates(1, 1);
+        Integer sampleObject = 1;
+        //when
+        boolean areEqual = coords.equals(sampleObject);
+        //then
+        assertFalse(areEqual);
+    }
+
+    @Test
+    public void manager_createJournalistMethod_still_returns_journalist_if_wrong_language_is_provided() {
+        //given
+        String wrongLanguage = "xyz";
+        String[] programArguments = {wrongLanguage};
+        //when
+        GameSessionManager manager = new GameSessionManager(new Scanner(System.in)::nextLine,
+                                                            programArguments,
+                                                            new InputConverter(), new InputValidator(new InputConverter()),
+                                                            System.out::println);
+        Journalist journalist = manager.getJournalist();
+        //then
+        assertNotNull(journalist);
+    }
+
+    @Test
+    public void InputConverter_parseToInteger_method_parses_String_to_Integer_correctly() {
+        //given
+        InputConverter converter = new InputConverter();
+        //when
+        Integer parsed = converter.parseToInteger("1");
+        //then
+        assertNotNull(parsed);
+    }
+
+    @Test(expectedExceptions = NumberFormatException.class)
+    public void InputConverter_parseToInteger_method_throws_NumberFormatException_if_wrong_string_provided() {
+        //given
+        InputConverter converter = new InputConverter();
+        String strangeString = "xyz";
+        //when
+        Integer parsed = converter.parseToInteger(strangeString);
+        //then
+        // exception thrown
+    }
+
+    @Test
+    public void InputValidator_properWinningNumberMethod_returns_false_if_user_provided_not_convertible_Integer() {
+        //given
+        String userInputWinningNumber = "xyz";
+        InputValidator validator = new InputValidator(new InputConverter());
+        //when
+        boolean properIntFormat = validator.properWinningNumber(userInputWinningNumber, sampleBoardDimensions);
+        //then
+        assertFalse(properIntFormat);
+    }
+
+    @Test
+    public void InputValidator_properWinningNumberMethod_returns_false_if_user_provided_to_big_Integer() {
+        //given
+        String userInputWinningNumber = "10";
+        InputValidator validator = new InputValidator(new InputConverter());
+        int maxWidth = 5;
+        int maxHeight = 5;
+        BoardDimensions dimensions = new BoardDimensions(maxWidth, maxHeight);
+        //when
+        boolean properIntFormat = validator.properWinningNumber(userInputWinningNumber, dimensions);
+        //then
+        assertFalse(properIntFormat);
+    }
+
+    @Test
+    public void InputValidator_properCoordinatesSchemaMethod_returns_false_if_cannot_parse_user_input_to_coordinates() {
+        //given
+        String userInputCoords = "1 b";
+        InputValidator validator = new InputValidator(new InputConverter());
+        //when
+        boolean properCoords = validator.properCoordinatesSchema(userInputCoords);
+        //then
+        assertFalse(properCoords);
+    }
+
 }
