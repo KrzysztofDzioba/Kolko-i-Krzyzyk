@@ -1,4 +1,15 @@
-package edu.dzioba;
+package edu.dzioba.Game;
+
+import edu.dzioba.Board.BoardDimensions;
+import edu.dzioba.Board.Coordinates;
+import edu.dzioba.Messaging.Journalist;
+import edu.dzioba.Messaging.Language;
+import edu.dzioba.Messaging.Messages;
+import edu.dzioba.Players.Player;
+import edu.dzioba.Players.Players;
+import edu.dzioba.Players.Sign;
+import edu.dzioba.UserInputHandling.InputConverter;
+import edu.dzioba.UserInputHandling.InputValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +18,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class GameSessionManager {
-    Supplier<String> userInputProvider;
+    private Supplier<String> userInputProvider;
     private Journalist journalist;
     private InputConverter converter;
     private InputValidator validator;
@@ -64,7 +75,7 @@ public class GameSessionManager {
 
     public Player getFirstPlayer(Players players) {
         Sign sign = askWhoShouldBegin();
-        Sign firstPlayerSign = Sign.getOppositeSign(sign); // opposite because in RunningState at the beginning there is current player swapping
+        Sign firstPlayerSign = sign.getOppositeSign(); // opposite because in RunningState at the beginning there is current player swapping
         return players.getPlayer(firstPlayerSign);
     }
 
@@ -100,7 +111,7 @@ public class GameSessionManager {
         return null;
     }
 
-    Coordinates getCoordinates(Player currentPlayer, BoardDimensions dimensions, Game currentGame) {
+    public Coordinates getCoordinates(Player currentPlayer, BoardDimensions dimensions, Game currentGame) {
         journalist.sayMessageWithParameters(Messages.player_make_move, currentPlayer.toString());
         String userInput = userInputProvider.get();
         boolean wrongUserInput = true;
@@ -111,7 +122,7 @@ public class GameSessionManager {
             if(validCoordsSchema) {
                 Coordinates coords = converter.getCoordinates(userInput);
                 boolean coordsInBoard = validator.coordinatesInBoard(dimensions, coords);
-                boolean coordsEmpty = validator.coordsAreEmptyInBoard(currentGame.board, coords);
+                boolean coordsEmpty = validator.coordsAreEmptyInBoard(currentGame.getBoard(), coords);
                 if(coordsInBoard && coordsEmpty)
                     return converter.getCoordinates(userInput);
                 else {
@@ -125,5 +136,9 @@ public class GameSessionManager {
             }
         }
         return null;
+    }
+
+    public Supplier<String> getUserInputProvider() {
+        return userInputProvider;
     }
 }

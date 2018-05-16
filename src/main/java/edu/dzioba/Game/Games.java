@@ -1,12 +1,15 @@
-package edu.dzioba;
+package edu.dzioba.Game;
+
+import edu.dzioba.Board.Board;
+import edu.dzioba.Board.BoardDimensions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Games {
-    Game currentGame;
-    List<Game> games;
+    private Game currentGame;
+    private List<Game> games;
     private BoardDimensions boardDimensions;
 
     public Games(List<Game> games) {
@@ -30,5 +33,9 @@ public class Games {
 
     public void setBoardDimensions(BoardDimensions boardDimensions) {
         this.boardDimensions = boardDimensions;
+    }
+
+    public Game getCurrentGame() {
+        return currentGame;
     }
 }

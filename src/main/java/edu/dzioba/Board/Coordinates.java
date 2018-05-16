@@ -1,4 +1,4 @@
-package edu.dzioba;
+package edu.dzioba.Board;
 
 public class Coordinates {
     private Integer row;

@@ -1,4 +1,6 @@
-package edu.dzioba;
+package edu.dzioba.States;
+
+import edu.dzioba.Messaging.Messages;
 
 public class DrawState extends GameState {
 
@@ -7,9 +9,10 @@ public class DrawState extends GameState {
     }
 
     @Override
-    GameState getNextState() {
-        players.currentPlayer.addPoints(1);
+    public GameState getNextState() {
+        players.getCurrentPlayer().addPoints(1);
         players.getNextPlayer().addPoints(1);
+        boardPrinter.printBoard();
         journalist.sayMessage(Messages.draw_after_game);
         if(games.threeGamesWerePlayed())
             return new FinalState(this);

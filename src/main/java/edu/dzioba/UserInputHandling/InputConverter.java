@@ -1,4 +1,8 @@
-package edu.dzioba;
+package edu.dzioba.UserInputHandling;
+
+import edu.dzioba.Board.BoardDimensions;
+import edu.dzioba.Board.Coordinates;
+import edu.dzioba.CustomExceptions.ValueZeroOrLessException;
 
 public class InputConverter {
 

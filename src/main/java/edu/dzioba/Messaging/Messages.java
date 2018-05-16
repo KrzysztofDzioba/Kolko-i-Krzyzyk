@@ -1,4 +1,4 @@
-package edu.dzioba;
+package edu.dzioba.Messaging;
 
 public enum Messages {
 
@@ -21,5 +21,6 @@ public enum Messages {
     same_fiercely,
     final_congratulation,
     new_board,
-    draw_after_game
+    draw_after_game,
+    moving
 }

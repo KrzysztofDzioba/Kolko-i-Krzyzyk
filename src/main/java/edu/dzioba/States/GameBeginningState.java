@@ -1,4 +1,7 @@
-package edu.dzioba;
+package edu.dzioba.States;
+
+import edu.dzioba.Board.BoardPrinter;
+import edu.dzioba.Messaging.Messages;
 
 public class GameBeginningState extends GameState {
 
@@ -7,17 +10,18 @@ public class GameBeginningState extends GameState {
     }
 
     @Override
-    GameState getNextState() {
+    public GameState getNextState() {
         journalist.sayMessageWithParameters(Messages.results,
-                                            players.currentPlayer.toString(),
-                                            String.valueOf(players.currentPlayer.getPoints()),
+                                            players.getCurrentPlayer().toString(),
+                                            String.valueOf(players.getCurrentPlayer().getPoints()),
                                             players.getNextPlayer().toString(),
                                             String.valueOf(players.getNextPlayer().getPoints()));
 
         journalist.sayMessage(Messages.new_board);
         games.addNewGame();
-        players.currentPlayer = players.getOppositePlayer(players.getGameBeginner());
+        players.setCurrentPlayer(players.getOppositePlayer(players.getGameBeginner()));
         players.setGameBeginner();
+        boardPrinter = new BoardPrinter(getCurrentGame().getBoard(), journalist);
         return new RunningState(this);
     }
 }

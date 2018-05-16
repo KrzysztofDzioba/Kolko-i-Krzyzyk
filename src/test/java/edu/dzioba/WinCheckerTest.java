@@ -1,5 +1,11 @@
 package edu.dzioba;
 
+import edu.dzioba.Board.Board;
+import edu.dzioba.Board.BoardDimensions;
+import edu.dzioba.Board.Coordinates;
+import edu.dzioba.Game.WinChecker;
+import edu.dzioba.Players.Sign;
+import edu.dzioba.UserInputHandling.InputValidator;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;

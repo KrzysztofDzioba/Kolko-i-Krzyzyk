@@ -1,4 +1,4 @@
-package edu.dzioba;
+package edu.dzioba.Messaging;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -17,6 +17,10 @@ public class Journalist {
         ResourceBundle bundle = ResourceBundle.getBundle("language", language);
         output.accept(bundle.getString(message.name()));
         return bundle.getString(message.name());
+    }
+
+    public void sayMessage(String message) {
+        output.accept(message);
     }
 
     public String sayMessageWithParameters(Messages message, String... strings) {

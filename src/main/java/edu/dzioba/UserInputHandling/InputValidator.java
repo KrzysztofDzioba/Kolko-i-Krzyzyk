@@ -1,23 +1,25 @@
-package edu.dzioba;
+package edu.dzioba.UserInputHandling;
+
+import edu.dzioba.Board.Board;
+import edu.dzioba.Board.BoardDimensions;
+import edu.dzioba.Board.Coordinates;
 
 public class InputValidator {
 
-    private InputConverter converter;
-
-    public InputValidator(InputConverter converter) {
-        this.converter = converter;
-    }
+    private final InputConverter converter;
 
     public InputValidator() {
+        this.converter = new InputConverter();
     }
 
     public boolean properBoardSizeInput(String boardSize) {
+        BoardDimensions boardDimensions;
         try {
-            converter.getBoardSize(boardSize);
+            boardDimensions = converter.getBoardSize(boardSize);
         } catch (NumberFormatException e){
             return false;
         }
-        return true;
+        return boardDimensions.height <= 100 && boardDimensions.width <= 100;
     }
 
     public boolean properWinningNumber(String userInput, BoardDimensions dimensions) {

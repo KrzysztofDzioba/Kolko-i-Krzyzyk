@@ -1,4 +1,6 @@
-package edu.dzioba;
+package edu.dzioba.Game;
+
+import edu.dzioba.States.GameState;
 
 public class GameSession {
     private GameState currentState;

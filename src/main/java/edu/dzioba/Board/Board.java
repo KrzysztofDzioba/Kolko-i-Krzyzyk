@@ -1,4 +1,6 @@
-package edu.dzioba;
+package edu.dzioba.Board;
+
+import edu.dzioba.Players.Sign;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,13 +8,17 @@ import java.util.Map;
 public class Board {
 
     private Map<Coordinates, Sign> fields;
-    BoardDimensions dimensions;
+    private BoardDimensions dimensions;
     private final int fieldsCount;
 
     public Board(BoardDimensions dimensions) {
         this.fields = new HashMap<>();
         this.dimensions = dimensions;
         fieldsCount = dimensions.height * dimensions.width;
+    }
+
+    public BoardDimensions getDimensions() {
+        return dimensions;
     }
 
     public void insertCoordinates(Coordinates coordinates, Sign sign) {
