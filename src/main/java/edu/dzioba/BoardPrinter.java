@@ -9,7 +9,7 @@ public class BoardPrinter {
         this.journalist = journalist;
     }
 
-    public void printBoard() {
+    public String printBoard() {
         int boardWidth = this.board.dimensions.width;
         int boardHeight = this.board.dimensions.height;
         StringBuilder boardToPrint = new StringBuilder();
@@ -20,7 +20,9 @@ public class BoardPrinter {
         boardToPrint.append(highestRow.toString());
         boardToPrint.append(restOfTheBoard.toString());
 
-        journalist.sayMessage(boardToPrint.toString());
+        String boardStr = boardToPrint.toString();
+        journalist.sayMessage(boardStr);
+        return boardStr;
     }
 
     private StringBuilder getPrintedRows(int boardWidth, int boardHeight) {
