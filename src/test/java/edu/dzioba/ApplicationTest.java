@@ -417,7 +417,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void InputConverter_parseToInteger_method_parses_String_to_Integer_correctly() {
+    public void inputConverter_parseToInteger_method_parses_String_to_Integer_correctly() {
         //given
         InputConverter converter = new InputConverter();
         //when
@@ -427,7 +427,7 @@ public class ApplicationTest {
     }
 
     @Test(expectedExceptions = NumberFormatException.class)
-    public void InputConverter_parseToInteger_method_throws_NumberFormatException_if_wrong_string_provided() {
+    public void inputConverter_parseToInteger_method_throws_NumberFormatException_if_wrong_string_provided() {
         //given
         InputConverter converter = new InputConverter();
         String strangeString = "xyz";
@@ -438,7 +438,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void InputValidator_properWinningNumberMethod_returns_false_if_user_provided_not_convertible_Integer() {
+    public void inputValidator_properWinningNumberMethod_returns_false_if_user_provided_not_convertible_Integer() {
         //given
         String userInputWinningNumber = "xyz";
         InputValidator validator = new InputValidator();
@@ -449,7 +449,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void InputValidator_properWinningNumberMethod_returns_false_if_user_provided_to_big_Integer() {
+    public void inputValidator_properWinningNumberMethod_returns_false_if_user_provided_to_big_Integer() {
         //given
         String userInputWinningNumber = "10";
         InputValidator validator = new InputValidator();
@@ -485,7 +485,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void Language_english_getLocale_returns_Locale_English() {
+    public void language_english_getLocale_returns_Locale_English() {
         //given
         Locale locale = Locale.ENGLISH;
         //when
@@ -495,7 +495,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void Language_polish_getLocale_returns_Locale_Polish() {
+    public void language_polish_getLocale_returns_Locale_Polish() {
         //given
         Locale locale = new Locale("pl", "PL");
         //when
@@ -505,7 +505,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void Players_swap_current_player_makes_current_player_opposite_one_to_actual() {
+    public void players_swap_current_player_makes_current_player_opposite_one_to_actual() {
         //given
         // currentPlayer: Sign.X
         //when
@@ -515,7 +515,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void Players_set_game_beginner_sets_current_player_as_game_beginner() {
+    public void players_set_game_beginner_sets_current_player_as_game_beginner() {
         //given
         //currentPlayer: Sign.X
         //when
