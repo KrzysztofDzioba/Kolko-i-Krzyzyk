@@ -4,9 +4,11 @@ import edu.dzioba.Board.Board;
 import edu.dzioba.Board.BoardDimensions;
 import edu.dzioba.Board.BoardPrinter;
 import edu.dzioba.Board.Coordinates;
+import edu.dzioba.Game.Game;
 import edu.dzioba.Game.GameSessionManager;
 import edu.dzioba.Game.Games;
 import edu.dzioba.Messaging.Journalist;
+import edu.dzioba.Messaging.Language;
 import edu.dzioba.Messaging.Messages;
 import edu.dzioba.Players.Player;
 import edu.dzioba.Players.Players;
@@ -16,10 +18,7 @@ import edu.dzioba.UserInputHandling.InputValidator;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 import static org.testng.Assert.*;
 
@@ -460,6 +459,58 @@ public class ApplicationTest {
         boolean properCoords = validator.properCoordinatesSchema(userInputCoords);
         //then
         assertFalse(properCoords);
+    }
+
+    @Test
+    public void setting_games_new_board_creates_board_in_game() {
+        //given
+        Game game = new Game();
+        BoardDimensions dimensions = new BoardDimensions(3,3);
+        //when
+        game.setNewBoard(dimensions);
+        //then
+        assertNotNull(game.getBoard());
+    }
+
+    @Test
+    public void Language_english_getLocale_returns_Locale_English() {
+        //given
+        Locale locale = Locale.ENGLISH;
+        //when
+        Locale testLocale = Language.en.getLocale();
+        //then
+        assertEquals(testLocale, locale);
+    }
+
+    @Test
+    public void Language_polish_getLocale_returns_Locale_Polish() {
+        //given
+        Locale locale = new Locale("pl", "PL");
+        //when
+        Locale testLocale = Language.pl.getLocale();
+        //then
+        assertEquals(testLocale, locale);
+    }
+
+    @Test
+    public void Players_swap_current_player_makes_current_player_opposite_one_to_actual() {
+        //given
+        // currentPlayer: Sign.X
+        //when
+        this.players.swapCurrentPlayer();
+        //then
+        assertEquals(players.getCurrentPlayer().getSign(), Sign.O);
+    }
+
+    @Test
+    public void Players_set_game_beginner_sets_current_player_as_game_beginner() {
+        //given
+        //currentPlayer: Sign.X
+        //when
+        players.setGameBeginner();
+        //then
+        assertEquals(players.getGameBeginner().getSign(), Sign.X);
+
     }
 
 }
