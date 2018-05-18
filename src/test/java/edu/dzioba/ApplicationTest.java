@@ -16,6 +16,7 @@ import edu.dzioba.Players.Sign;
 import edu.dzioba.UserInputHandling.InputConverter;
 import edu.dzioba.UserInputHandling.InputValidator;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.*;
@@ -36,6 +37,17 @@ public class ApplicationTest {
         sampleBoardDimensions = new BoardDimensions(3,3);
         sampleJournalist = new Journalist(Locale.ENGLISH, System.out::println);
         validator = new InputValidator();
+    }
+
+    @DataProvider(name = "5differentNotConvertibleToIntStrings")
+    public Object[][] notConvertibleToIntStrings() {
+        Object[][] result = new Object[10][1];
+        result[0][0] = "abc";
+        result[1][0] = "1a";
+        result[2][0] = "1 a";
+        result[3][0] = "1 ";
+        result[4][0] = "24 1";
+        return result;
     }
 
     @Test
@@ -510,7 +522,17 @@ public class ApplicationTest {
         players.setGameBeginner();
         //then
         assertEquals(players.getGameBeginner().getSign(), Sign.X);
+    }
 
+    @Test(dataProvider = "5differentNotConvertibleToIntStrings",
+          expectedExceptions = NumberFormatException.class)
+    public void it_is_impossible_to_convert_to_int_wrong_string(String strToParse) {
+        //given
+        InputConverter converter = new InputConverter();
+        //when
+        converter.parseToInteger(strToParse);
+        //then
+        // exception occured
     }
 
 }
