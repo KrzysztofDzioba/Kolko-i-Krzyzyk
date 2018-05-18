@@ -4,9 +4,11 @@ import edu.dzioba.Board.Board;
 import edu.dzioba.Board.BoardDimensions;
 import edu.dzioba.Board.BoardPrinter;
 import edu.dzioba.Board.Coordinates;
+import edu.dzioba.Game.Game;
 import edu.dzioba.Game.GameSessionManager;
 import edu.dzioba.Game.Games;
 import edu.dzioba.Messaging.Journalist;
+import edu.dzioba.Messaging.Language;
 import edu.dzioba.Messaging.Messages;
 import edu.dzioba.Players.Player;
 import edu.dzioba.Players.Players;
@@ -14,12 +16,10 @@ import edu.dzioba.Players.Sign;
 import edu.dzioba.UserInputHandling.InputConverter;
 import edu.dzioba.UserInputHandling.InputValidator;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 import static org.testng.Assert.*;
 
@@ -37,6 +37,17 @@ public class ApplicationTest {
         sampleBoardDimensions = new BoardDimensions(3,3);
         sampleJournalist = new Journalist(Locale.ENGLISH, System.out::println);
         validator = new InputValidator();
+    }
+
+    @DataProvider(name = "5differentNotConvertibleToIntStrings")
+    public Object[][] notConvertibleToIntStrings() {
+        Object[][] result = new Object[10][1];
+        result[0][0] = "abc";
+        result[1][0] = "1a";
+        result[2][0] = "1 a";
+        result[3][0] = "1 ";
+        result[4][0] = "24 1";
+        return result;
     }
 
     @Test
@@ -406,7 +417,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void InputConverter_parseToInteger_method_parses_String_to_Integer_correctly() {
+    public void inputConverter_parseToInteger_method_parses_String_to_Integer_correctly() {
         //given
         InputConverter converter = new InputConverter();
         //when
@@ -416,7 +427,7 @@ public class ApplicationTest {
     }
 
     @Test(expectedExceptions = NumberFormatException.class)
-    public void InputConverter_parseToInteger_method_throws_NumberFormatException_if_wrong_string_provided() {
+    public void inputConverter_parseToInteger_method_throws_NumberFormatException_if_wrong_string_provided() {
         //given
         InputConverter converter = new InputConverter();
         String strangeString = "xyz";
@@ -427,7 +438,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void InputValidator_properWinningNumberMethod_returns_false_if_user_provided_not_convertible_Integer() {
+    public void inputValidator_properWinningNumberMethod_returns_false_if_user_provided_not_convertible_Integer() {
         //given
         String userInputWinningNumber = "xyz";
         InputValidator validator = new InputValidator();
@@ -438,7 +449,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void InputValidator_properWinningNumberMethod_returns_false_if_user_provided_to_big_Integer() {
+    public void inputValidator_properWinningNumberMethod_returns_false_if_user_provided_to_big_Integer() {
         //given
         String userInputWinningNumber = "10";
         InputValidator validator = new InputValidator();
@@ -460,6 +471,68 @@ public class ApplicationTest {
         boolean properCoords = validator.properCoordinatesSchema(userInputCoords);
         //then
         assertFalse(properCoords);
+    }
+
+    @Test
+    public void setting_games_new_board_creates_board_in_game() {
+        //given
+        Game game = new Game();
+        BoardDimensions dimensions = new BoardDimensions(3,3);
+        //when
+        game.setNewBoard(dimensions);
+        //then
+        assertNotNull(game.getBoard());
+    }
+
+    @Test
+    public void language_english_getLocale_returns_Locale_English() {
+        //given
+        Locale locale = Locale.ENGLISH;
+        //when
+        Locale testLocale = Language.en.getLocale();
+        //then
+        assertEquals(testLocale, locale);
+    }
+
+    @Test
+    public void language_polish_getLocale_returns_Locale_Polish() {
+        //given
+        Locale locale = new Locale("pl", "PL");
+        //when
+        Locale testLocale = Language.pl.getLocale();
+        //then
+        assertEquals(testLocale, locale);
+    }
+
+    @Test
+    public void players_swap_current_player_makes_current_player_opposite_one_to_actual() {
+        //given
+        // currentPlayer: Sign.X
+        //when
+        this.players.swapCurrentPlayer();
+        //then
+        assertEquals(players.getCurrentPlayer().getSign(), Sign.O);
+    }
+
+    @Test
+    public void players_set_game_beginner_sets_current_player_as_game_beginner() {
+        //given
+        //currentPlayer: Sign.X
+        //when
+        players.setGameBeginner();
+        //then
+        assertEquals(players.getGameBeginner().getSign(), Sign.X);
+    }
+
+    @Test(dataProvider = "5differentNotConvertibleToIntStrings",
+          expectedExceptions = NumberFormatException.class)
+    public void it_is_impossible_to_convert_to_int_wrong_string(String strToParse) {
+        //given
+        InputConverter converter = new InputConverter();
+        //when
+        converter.parseToInteger(strToParse);
+        //then
+        // exception occured
     }
 
 }
